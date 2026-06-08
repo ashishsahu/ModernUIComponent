@@ -1,17 +1,8 @@
-import { access } from "node:fs/promises"
+import { access, readFile } from "node:fs/promises"
 import { constants } from "node:fs"
 
-const items = [
-  "theme",
-  "utils",
-  "button",
-  "input",
-  "card",
-  "label",
-  "dialog",
-  "login-form",
-  "project-setup",
-]
+const registry = JSON.parse(await readFile("registry.json", "utf8"))
+const items = registry.items.map((item) => item.name)
 
 for (const item of items) {
   await access(`public/r/${item}.json`, constants.F_OK)

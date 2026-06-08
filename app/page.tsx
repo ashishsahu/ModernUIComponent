@@ -23,14 +23,14 @@ const components = [
     name: "theme",
     title: "Theme",
     description: "ModernUI design tokens and CSS variables.",
-    install: "npx shadcn@latest add your-org/ModernUIComponent/theme",
+    install: "npx shadcn@latest add ashishsahu/ModernUIComponent/theme",
     preview: null,
   },
   {
     name: "button",
     title: "Button",
     description: "Button with default, brand, and standard variants.",
-    install: "npx shadcn@latest add your-org/ModernUIComponent/button",
+    install: "npx shadcn@latest add ashishsahu/ModernUIComponent/button",
     preview: (
       <div className="flex flex-wrap gap-3">
         <Button>Default</Button>
@@ -46,7 +46,7 @@ const components = [
     name: "input",
     title: "Input",
     description: "Text input with focus ring and validation states.",
-    install: "npx shadcn@latest add your-org/ModernUIComponent/input",
+    install: "npx shadcn@latest add ashishsahu/ModernUIComponent/input",
     preview: (
       <div className="flex w-full max-w-sm flex-col gap-3">
         <Input placeholder="Email address" type="email" />
@@ -58,7 +58,7 @@ const components = [
     name: "card",
     title: "Card",
     description: "Layout container with header, content, and footer slots.",
-    install: "npx shadcn@latest add your-org/ModernUIComponent/card",
+    install: "npx shadcn@latest add ashishsahu/ModernUIComponent/card",
     preview: (
       <Card className="w-full max-w-sm">
         <CardHeader>
@@ -75,7 +75,7 @@ const components = [
     name: "dialog",
     title: "Dialog",
     description: "Modal overlay for confirmations and forms.",
-    install: "npx shadcn@latest add your-org/ModernUIComponent/dialog",
+    install: "npx shadcn@latest add ashishsahu/ModernUIComponent/dialog",
     preview: (
       <Dialog>
         <DialogTrigger asChild>
@@ -96,7 +96,7 @@ const components = [
     name: "login-form",
     title: "Login Form",
     description: "Composite sign-in block with Zod validation.",
-    install: "npx shadcn@latest add your-org/ModernUIComponent/login-form",
+    install: "npx shadcn@latest add ashishsahu/ModernUIComponent/login-form",
     preview: <LoginForm />,
   },
 ]
@@ -121,13 +121,13 @@ export default function Home() {
         <h2 className="text-sm font-medium">Quick start (consumer project)</h2>
         <pre className="bg-background overflow-x-auto rounded-md border p-3 text-sm">
           <code>{`npx shadcn@latest init
-npx shadcn@latest add your-org/ModernUIComponent/theme
-npx shadcn@latest add your-org/ModernUIComponent/utils
-npx shadcn@latest add your-org/ModernUIComponent/button`}</code>
+npx shadcn@latest add ashishsahu/ModernUIComponent/theme
+npx shadcn@latest add ashishsahu/ModernUIComponent/utils
+npx shadcn@latest add ashishsahu/ModernUIComponent/button`}</code>
         </pre>
         <p className="text-muted-foreground text-sm">
           See{" "}
-          <a href="https://github.com/your-org/ModernUIComponent/blob/main/docs/CONSUMER.md" className="text-primary underline-offset-4 hover:underline">
+          <a href="https://github.com/ashishsahu/ModernUIComponent/blob/main/docs/CONSUMER.md" className="text-primary underline-offset-4 hover:underline">
             docs/CONSUMER.md
           </a>{" "}
           for full setup instructions.

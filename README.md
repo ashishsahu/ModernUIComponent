@@ -34,9 +34,9 @@ pnpm registry:validate
 ### GitHub Registry
 
 ```bash
-npx shadcn@latest add your-org/ModernUIComponent/theme
-npx shadcn@latest add your-org/ModernUIComponent/button
-npx shadcn@latest add your-org/ModernUIComponent/login-form
+npx shadcn@latest add ashishsahu/ModernUIComponent/theme
+npx shadcn@latest add ashishsahu/ModernUIComponent/button
+npx shadcn@latest add ashishsahu/ModernUIComponent/login-form
 ```
 
 ### Hosted namespace (@modernui)

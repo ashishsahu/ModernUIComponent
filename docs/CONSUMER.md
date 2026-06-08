@@ -12,37 +12,35 @@ npx shadcn@latest init
 
 ## Option A: GitHub Registry (recommended to start)
 
-Replace `your-org/ModernUIComponent` with your actual GitHub owner and repo.
-
 ```bash
 # Install foundation first
-npx shadcn@latest add your-org/ModernUIComponent/theme
-npx shadcn@latest add your-org/ModernUIComponent/utils
+npx shadcn@latest add ashishsahu/ModernUIComponent/theme
+npx shadcn@latest add ashishsahu/ModernUIComponent/utils
 
 # Install primitives
-npx shadcn@latest add your-org/ModernUIComponent/button
-npx shadcn@latest add your-org/ModernUIComponent/input
-npx shadcn@latest add your-org/ModernUIComponent/card
-npx shadcn@latest add your-org/ModernUIComponent/dialog
+npx shadcn@latest add ashishsahu/ModernUIComponent/button
+npx shadcn@latest add ashishsahu/ModernUIComponent/input
+npx shadcn@latest add ashishsahu/ModernUIComponent/card
+npx shadcn@latest add ashishsahu/ModernUIComponent/dialog
 
 # Install composite blocks
-npx shadcn@latest add your-org/ModernUIComponent/login-form
+npx shadcn@latest add ashishsahu/ModernUIComponent/login-form
 
 # Optional: project conventions
-npx shadcn@latest add your-org/ModernUIComponent/project-setup
+npx shadcn@latest add ashishsahu/ModernUIComponent/project-setup
 ```
 
 ### Discover available components
 
 ```bash
-npx shadcn@latest list your-org/ModernUIComponent
-npx shadcn@latest view your-org/ModernUIComponent/button
+npx shadcn@latest list ashishsahu/ModernUIComponent
+npx shadcn@latest view ashishsahu/ModernUIComponent/button
 ```
 
 ### Pin a version
 
 ```bash
-npx shadcn@latest add your-org/ModernUIComponent/button#v1.0.0
+npx shadcn@latest add ashishsahu/ModernUIComponent/button#v1.0.0
 ```
 
 ## Option B: Hosted namespace
