@@ -3,6 +3,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * ModernUI theme — sourced from Figma Dev-Ready Designs palette
+ * https://www.figma.com/design/gjpoz1ULnuPYTdTZm9Zj0X?node-id=625-22446
+ *
+ * Blacks:  Primary #242422 | Secondary #595959 | Tertiary #8C8C8C | Quaternary #BFBFBF
+ * Greys:   Grey 16 #D6D6D6 | Grey 8 #EBEBEB | Grey 4 #F5F5F5 | Grey 2 #FAFAFA | White #FFFFFF
+ * Brand:   Slate #242422 | Dark Teal #009293 | Cream #EDE9E5
+ *          Cream BG 1–3 #F2EFEC #F6F4F2 #F9F8F7 | Teal BG 1–2 #D6EDED #E5F4F4
+ */
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -39,6 +49,8 @@
   --color-card: var(--card);
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
+  --color-cream: var(--cream);
+  --color-teal-bg: var(--teal-bg);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -47,75 +59,115 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.99 0.002 264);
-  --foreground: oklch(0.18 0.02 264);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.02 264);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.02 264);
-  --primary: oklch(0.45 0.2 264);
-  --primary-foreground: oklch(0.99 0.002 264);
-  --secondary: oklch(0.96 0.01 264);
-  --secondary-foreground: oklch(0.3 0.05 264);
-  --muted: oklch(0.96 0.01 264);
-  --muted-foreground: oklch(0.5 0.03 264);
-  --accent: oklch(0.94 0.02 264);
-  --accent-foreground: oklch(0.3 0.05 264);
-  --destructive: oklch(0.55 0.22 25);
-  --border: oklch(0.9 0.01 264);
-  --input: oklch(0.9 0.01 264);
-  --ring: oklch(0.55 0.15 264);
-  --brand: oklch(0.5 0.22 264);
-  --brand-foreground: oklch(0.99 0.002 264);
-  --chart-1: oklch(0.55 0.2 264);
-  --chart-2: oklch(0.6 0.15 200);
-  --chart-3: oklch(0.65 0.12 150);
-  --chart-4: oklch(0.7 0.18 80);
-  --chart-5: oklch(0.6 0.2 30);
-  --sidebar: oklch(0.98 0.005 264);
-  --sidebar-foreground: oklch(0.18 0.02 264);
-  --sidebar-primary: oklch(0.45 0.2 264);
-  --sidebar-primary-foreground: oklch(0.99 0.002 264);
-  --sidebar-accent: oklch(0.94 0.02 264);
-  --sidebar-accent-foreground: oklch(0.3 0.05 264);
-  --sidebar-border: oklch(0.9 0.01 264);
-  --sidebar-ring: oklch(0.55 0.15 264);
+
+  /* Surfaces — warm cream backgrounds */
+  --background: #f9f8f7;
+  --foreground: #242422;
+  --card: #ffffff;
+  --card-foreground: #242422;
+  --popover: #ffffff;
+  --popover-foreground: #242422;
+
+  /* Brand — Dark Teal primary, Slate ink */
+  --primary: #009293;
+  --primary-foreground: #ffffff;
+  --brand: #009293;
+  --brand-foreground: #ffffff;
+
+  /* Neutrals */
+  --secondary: #f6f4f2;
+  --secondary-foreground: #242422;
+  --muted: #f2efec;
+  --muted-foreground: #595959;
+  --accent: #e5f4f4;
+  --accent-foreground: #009293;
+
+  /* Semantic */
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+
+  /* Borders & inputs — Grey 8 / Grey 16 */
+  --border: #ebebeb;
+  --input: #d6d6d6;
+  --ring: #009293;
+
+  /* Extended palette tokens */
+  --cream: #ede9e5;
+  --teal-bg: #d6eded;
+
+  /* Text scale (Figma) */
+  --text-primary: #1f1f1f;
+  --text-secondary: #595959;
+  --text-tertiary: #8c8c8c;
+  --text-quaternary: #bfbfbf;
+
+  /* Charts — teal + neutral ramp */
+  --chart-1: #009293;
+  --chart-2: #007072;
+  --chart-3: #595959;
+  --chart-4: #8c8c8c;
+  --chart-5: #d6eded;
+
+  /* Sidebar */
+  --sidebar: #f6f4f2;
+  --sidebar-foreground: #242422;
+  --sidebar-primary: #009293;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e5f4f4;
+  --sidebar-accent-foreground: #009293;
+  --sidebar-border: #ebebeb;
+  --sidebar-ring: #009293;
 }
 
 .dark {
-  --background: oklch(0.14 0.02 264);
-  --foreground: oklch(0.97 0.005 264);
-  --card: oklch(0.18 0.025 264);
-  --card-foreground: oklch(0.97 0.005 264);
-  --popover: oklch(0.18 0.025 264);
-  --popover-foreground: oklch(0.97 0.005 264);
-  --primary: oklch(0.65 0.18 264);
-  --primary-foreground: oklch(0.14 0.02 264);
-  --secondary: oklch(0.24 0.03 264);
-  --secondary-foreground: oklch(0.97 0.005 264);
-  --muted: oklch(0.24 0.03 264);
-  --muted-foreground: oklch(0.65 0.04 264);
-  --accent: oklch(0.26 0.04 264);
-  --accent-foreground: oklch(0.97 0.005 264);
-  --destructive: oklch(0.6 0.2 25);
-  --border: oklch(0.28 0.03 264);
-  --input: oklch(0.28 0.03 264);
-  --ring: oklch(0.55 0.15 264);
-  --brand: oklch(0.6 0.2 264);
-  --brand-foreground: oklch(0.14 0.02 264);
-  --chart-1: oklch(0.6 0.2 264);
-  --chart-2: oklch(0.65 0.15 200);
-  --chart-3: oklch(0.7 0.12 150);
-  --chart-4: oklch(0.75 0.18 80);
-  --chart-5: oklch(0.65 0.2 30);
-  --sidebar: oklch(0.16 0.025 264);
-  --sidebar-foreground: oklch(0.97 0.005 264);
-  --sidebar-primary: oklch(0.6 0.2 264);
-  --sidebar-primary-foreground: oklch(0.97 0.005 264);
-  --sidebar-accent: oklch(0.24 0.03 264);
-  --sidebar-accent-foreground: oklch(0.97 0.005 264);
-  --sidebar-border: oklch(0.28 0.03 264);
-  --sidebar-ring: oklch(0.55 0.15 264);
+  --background: #242422;
+  --foreground: #f9f8f7;
+  --card: #2e2e2c;
+  --card-foreground: #f9f8f7;
+  --popover: #2e2e2c;
+  --popover-foreground: #f9f8f7;
+
+  --primary: #00a8a9;
+  --primary-foreground: #ffffff;
+  --brand: #00a8a9;
+  --brand-foreground: #ffffff;
+
+  --secondary: #363634;
+  --secondary-foreground: #f9f8f7;
+  --muted: #363634;
+  --muted-foreground: #bfbfbf;
+  --accent: #1a3d3d;
+  --accent-foreground: #d6eded;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  --border: #595959;
+  --input: #595959;
+  --ring: #00a8a9;
+
+  --cream: #363634;
+  --teal-bg: #1a3d3d;
+
+  --text-primary: #f9f8f7;
+  --text-secondary: #bfbfbf;
+  --text-tertiary: #8c8c8c;
+  --text-quaternary: #595959;
+
+  --chart-1: #00a8a9;
+  --chart-2: #d6eded;
+  --chart-3: #8c8c8c;
+  --chart-4: #595959;
+  --chart-5: #009293;
+
+  --sidebar: #2e2e2c;
+  --sidebar-foreground: #f9f8f7;
+  --sidebar-primary: #00a8a9;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1a3d3d;
+  --sidebar-accent-foreground: #d6eded;
+  --sidebar-border: #595959;
+  --sidebar-ring: #00a8a9;
 }
 
 @layer base {
