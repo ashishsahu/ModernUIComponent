@@ -11,6 +11,10 @@ import { accordionVariantCodes } from "@/app/component-examples/accordion-varian
 import { docVariantPages } from "@/app/component-variants/doc-pages"
 import { docVariantSupplements } from "@/app/component-variants/doc-supplements"
 import { generatedVariantPages } from "@/app/component-variants/generated-pages"
+import {
+  LoginVariantPage,
+  SignupVariantPage,
+} from "@/app/component-variants/auth-block-pages"
 import { projectSetupVariantPage } from "@/app/component-variants/project-setup-page"
 import type { ComponentVariantPage } from "@/app/component-variants/types"
 
@@ -58,6 +62,10 @@ export const accordionVariantPage: ComponentVariantPage = {
   ],
 }
 
+function normalizeVariantId(variantId: string) {
+  return variantId.toLowerCase().replace(/[-_]/g, "")
+}
+
 function mergeVariantPages(
   ...sources: Record<string, ComponentVariantPage>[]
 ): Record<string, ComponentVariantPage> {
@@ -70,12 +78,16 @@ function mergeVariantPages(
         continue
       }
 
-      const existingIds = new Set(merged[name].variants.map((variant) => variant.id))
+      const existingIds = new Set(
+        merged[name].variants.map((variant) => normalizeVariantId(variant.id))
+      )
       merged[name] = {
         ...merged[name],
         variants: [
           ...merged[name].variants,
-          ...page.variants.filter((variant) => !existingIds.has(variant.id)),
+          ...page.variants.filter(
+            (variant) => !existingIds.has(normalizeVariantId(variant.id))
+          ),
         ],
       }
     }
@@ -86,6 +98,8 @@ function mergeVariantPages(
 
 export const componentVariantPages: Record<string, ComponentVariantPage> = {
   accordion: accordionVariantPage,
+  login: LoginVariantPage,
+  signup: SignupVariantPage,
   "project-setup": projectSetupVariantPage,
   ...mergeVariantPages(
     generatedVariantPages,
@@ -95,6 +109,8 @@ export const componentVariantPages: Record<string, ComponentVariantPage> = {
 }
 
 const DETAIL_PAGE_LABELS: Record<string, string> = {
+  login: "Blocks",
+  signup: "Blocks",
   "project-setup": "Details",
 }
 

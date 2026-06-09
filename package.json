@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "registry:generate": "node scripts/generate-registry.mjs",
     "registry:sync-charts": "node scripts/sync-chart-blocks.mjs",
-    "registry:sync-demos": "node scripts/sync-doc-variants.mjs",
+    "registry:sync-auth": "node scripts/sync-auth-blocks.mjs",
+    "registry:sync-demos": "node scripts/sync-doc-variants.mjs && node scripts/sync-auth-blocks.mjs",
     "registry:build": "npx shadcn@latest build",
     "registry:validate": "node scripts/validate-registry.mjs"
   },

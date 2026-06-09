@@ -18,8 +18,25 @@ function isSidebarPage(componentName: string) {
   return componentName === "sidebar"
 }
 
-function isSidebarBlockVariant(variantId: string) {
+function isAuthBlockPage(componentName: string) {
+  return componentName === "login" || componentName === "signup"
+}
+
+function isBlockLayoutVariant(variantId: string) {
   return /^\d{2}$/.test(variantId)
+}
+
+const POPOVER_PREVIEW_PAGES = new Set([
+  "navigation-menu",
+  "menubar",
+  "dropdown-menu",
+  "popover",
+  "hover-card",
+  "context-menu",
+])
+
+function isPopoverPreviewPage(componentName: string) {
+  return POPOVER_PREVIEW_PAGES.has(componentName)
 }
 
 type VariantCodeTarget = {
@@ -94,19 +111,17 @@ export function ComponentVariantDetail({ name }: { name: string }) {
             </div>
             <VariantPreviewCanvas
               Preview={variant.Preview}
-              fullWidth={isSidebarPage(page.name)}
               tall={
-                isSidebarPage(page.name) &&
-                !isSidebarBlockVariant(variant.id)
+                isSidebarPage(page.name) && !isBlockLayoutVariant(variant.id)
               }
               blockLayout={
-                isSidebarPage(page.name) &&
-                isSidebarBlockVariant(variant.id)
+                (isSidebarPage(page.name) || isAuthBlockPage(page.name)) &&
+                isBlockLayoutVariant(variant.id)
               }
               containSidebar={
-                isSidebarPage(page.name) &&
-                !isSidebarBlockVariant(variant.id)
+                isSidebarPage(page.name) && !isBlockLayoutVariant(variant.id)
               }
+              popoverPreview={isPopoverPreviewPage(page.name)}
             />
           </article>
         ))}

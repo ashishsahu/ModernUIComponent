@@ -1,17 +1,19 @@
-import { readFile, writeFile, mkdir } from "node:fs/promises"
+import { readFile, writeFile, mkdir, access } from "node:fs/promises"
 import path from "node:path"
 
 import {
   GENERATED_DIR,
-  ROOT,
+  normalizeVariantId,
   toExportName,
   transformConsumerCode,
 } from "./sync-component-demos.mjs"
 
+const ROOT = process.cwd()
 const RADIX_RAW_BASE =
   "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/examples/radix"
 const GITHUB_API_DIR =
   "https://api.github.com/repos/shadcn-ui/ui/contents/apps/v4/examples/radix"
+const RADIX_MANIFEST = path.join(ROOT, "scripts/radix-example-manifest.json")
 
 const SKIP_COMPONENTS = new Set(["direction", "form", "typography", "toast"])
 const SKIP_VARIANTS = new Map([
@@ -134,7 +136,27 @@ function transformRadixExampleSource(content, previewName) {
   return source
 }
 
-async function fetchRadixExampleFiles() {
+async function readRadixManifest() {
+  try {
+    await access(RADIX_MANIFEST)
+    const manifest = JSON.parse(await readFile(RADIX_MANIFEST, "utf8"))
+    if (Array.isArray(manifest.files) && manifest.files.length > 0) {
+      return manifest.files
+    }
+  } catch {
+    // no cached manifest
+  }
+  return null
+}
+
+async function writeRadixManifest(files) {
+  await writeFile(
+    RADIX_MANIFEST,
+    `${JSON.stringify({ updatedAt: new Date().toISOString(), files }, null, 2)}\n`
+  )
+}
+
+async function fetchRadixExampleFilesFromGitHub() {
   const files = []
   let url = `${GITHUB_API_DIR}?per_page=100`
 
@@ -143,11 +165,15 @@ async function fetchRadixExampleFiles() {
       headers: { Accept: "application/vnd.github+json" },
     })
     if (!response.ok) {
-      throw new Error(`Failed to list radix examples: ${response.status}`)
+      throw new Error(`GitHub API returned ${response.status}`)
     }
 
     const page = await response.json()
-    files.push(...page.filter((entry) => entry.name.endsWith(".tsx")).map((entry) => entry.name))
+    files.push(
+      ...page
+        .filter((entry) => entry.name.endsWith(".tsx"))
+        .map((entry) => entry.name)
+    )
 
     const link = response.headers.get("link")
     const next = link?.match(/<([^>]+)>;\s*rel="next"/)?.[1]
@@ -157,17 +183,47 @@ async function fetchRadixExampleFiles() {
   return files
 }
 
-async function syncRadixDocExamples({ generatedPages, uiNames, uiItemByName }) {
+async function resolveRadixExampleFiles({ requireRemote = false } = {}) {
+  try {
+    const files = await fetchRadixExampleFilesFromGitHub()
+    await writeRadixManifest(files)
+    return { files, source: "github" }
+  } catch (error) {
+    const cached = await readRadixManifest()
+    if (cached) {
+      console.warn(
+        `GitHub API unavailable (${error.message}). Using cached radix manifest (${cached.length} files).`
+      )
+      return { files: cached, source: "cache" }
+    }
+
+    if (requireRemote) {
+      throw new Error(
+        `Cannot sync radix doc examples: ${error.message}. No cached manifest at scripts/radix-example-manifest.json.`
+      )
+    }
+
+    throw error
+  }
+}
+
+async function syncRadixDocExamples({
+  generatedPages,
+  uiNames,
+  uiItemByName,
+  radixExampleFiles,
+}) {
   const uiNamesByLength = [...uiNames].sort((a, b) => b.length - a.length)
   const pageByName = new Map(generatedPages.map((page) => [page.name, page]))
   const existingIds = new Map(
     generatedPages.map((page) => [
       page.name,
-      new Set(page.variants.map((variant) => variant.id)),
+      new Set(page.variants.map((variant) => normalizeVariantId(variant.id))),
     ])
   )
 
-  const exampleFiles = await fetchRadixExampleFiles()
+  const exampleFiles =
+    radixExampleFiles ?? (await resolveRadixExampleFiles()).files
   const toFetch = []
 
   for (const fileName of exampleFiles) {
@@ -177,7 +233,9 @@ async function syncRadixDocExamples({ generatedPages, uiNames, uiItemByName }) {
     const { componentName, variantId } = parsed
     if (SKIP_COMPONENTS.has(componentName)) continue
     if (SKIP_VARIANTS.get(componentName)?.has(variantId)) continue
-    if (existingIds.get(componentName)?.has(variantId)) continue
+    if (existingIds.get(componentName)?.has(normalizeVariantId(variantId))) {
+      continue
+    }
 
     toFetch.push({ fileName, componentName, variantId })
   }
@@ -218,7 +276,7 @@ async function syncRadixDocExamples({ generatedPages, uiNames, uiItemByName }) {
 
     if (pageByName.has(componentName)) {
       pageByName.get(componentName).variants.push(variant)
-      existingIds.get(componentName).add(variantId)
+      existingIds.get(componentName).add(normalizeVariantId(variantId))
     } else {
       const item = uiItemByName.get(componentName)
       const page = {
@@ -229,7 +287,7 @@ async function syncRadixDocExamples({ generatedPages, uiNames, uiItemByName }) {
       }
       generatedPages.push(page)
       pageByName.set(componentName, page)
-      existingIds.set(componentName, new Set([variantId]))
+      existingIds.set(componentName, new Set([normalizeVariantId(variantId)]))
     }
 
     added++
@@ -248,4 +306,4 @@ async function syncRadixDocExamples({ generatedPages, uiNames, uiItemByName }) {
   return { added }
 }
 
-export { syncRadixDocExamples }
+export { resolveRadixExampleFiles, syncRadixDocExamples }

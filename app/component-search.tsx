@@ -1,7 +1,10 @@
 "use client"
 
 import * as React from "react"
+import { XIcon } from "lucide-react"
 
+import { cn } from "@/lib/utils"
+import { Button } from "@/registry/default/ui/button"
 import { Input } from "@/registry/default/ui/input"
 
 type ComponentSearchContextValue = {
@@ -50,14 +53,29 @@ export function ComponentSearchInput({
   className?: string
 }) {
   const { query, setQuery } = useComponentSearch()
+  const hasQuery = query.length > 0
 
   return (
-    <Input
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
-      placeholder="Search components..."
-      className={className}
-      aria-label="Search components"
-    />
+    <div className={cn("relative", className)}>
+      <Input
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search components..."
+        className={cn(hasQuery && "pr-9")}
+        aria-label="Search components"
+      />
+      {hasQuery ? (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="text-muted-foreground hover:text-foreground absolute top-1/2 right-1 size-7 -translate-y-1/2"
+          onClick={() => setQuery("")}
+          aria-label="Clear search"
+        >
+          <XIcon className="size-4" />
+        </Button>
+      ) : null}
+    </div>
   )
 }

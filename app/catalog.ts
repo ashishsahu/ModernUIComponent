@@ -32,6 +32,11 @@ export const catalog: CatalogCategory[] = [
     id: "foundation",
     title: "Foundation",
     items: [
+      item(
+        "project-setup",
+        "Project Setup",
+        "Install AGENTS.md and docs/modernui-setup.md — conventions for contributors and a step-by-step consumer install guide."
+      ),
       item("theme", "Theme", "Figma Dev-Ready design tokens and CSS variables."),
       item("utils", "Utils", "cn() classname utility."),
     ],
@@ -139,15 +144,12 @@ export const catalog: CatalogCategory[] = [
     id: "blocks",
     title: "Blocks",
     items: [
+      item("login", "Login", "Authentication layouts and login form blocks."),
+      item("signup", "Signup", "Registration layouts and signup form blocks."),
       item(
         "login-form",
         "Login Form",
         "Sign-in form block with Zod validation."
-      ),
-      item(
-        "project-setup",
-        "Project Setup",
-        "AGENTS.md and consumer documentation files."
       ),
     ],
   },

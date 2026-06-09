@@ -10,7 +10,7 @@ export const projectSetupVariantPage: ComponentVariantPage = {
   name: "project-setup",
   title: "Project Setup",
   description:
-    "Install AGENTS.md and consumer documentation into your project.",
+    "Bootstrap a new consumer project with AGENTS.md (contributor conventions) and docs/modernui-setup.md (install guide). Recommended as the first step after theme and utils.",
   install: "npx shadcn@latest add ashishsahu/ModernUIComponent/project-setup",
   variants: [
     {

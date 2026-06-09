@@ -18,6 +18,8 @@ import {
 } from "lucide-react"
 
 import { AccordionBasicPreview } from "@/app/component-examples/accordion-variants"
+import { ProjectSetupOverviewPreview } from "@/app/component-examples/project-setup-detail"
+import { authBlockCatalogPreviews } from "@/app/component-examples/auth-block-catalog-previews"
 import { chartPreviewEntries } from "@/app/chart-previews"
 import { ThemePalettePreview } from "@/app/theme-palette-preview"
 import { LoginForm } from "@/registry/default/blocks/login-form/login-form"
@@ -816,11 +818,8 @@ export const componentPreviews: Record<string, React.ReactNode> = {
       </CommandList>
     </Command>
   ),
+  ...authBlockCatalogPreviews,
   "login-form": <LoginForm />,
   ...chartPreviewEntries,
-  "project-setup": (
-    <div className="text-muted-foreground max-w-sm text-center text-sm">
-      Installs AGENTS.md and docs/modernui-setup.md into consumer projects.
-    </div>
-  ),
+  "project-setup": <ProjectSetupOverviewPreview />,
 }

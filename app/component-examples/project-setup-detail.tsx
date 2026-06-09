@@ -18,11 +18,11 @@ const installFiles = [
 ] as const
 
 const installOrder = [
+  "project-setup — AGENTS.md and consumer docs (this item)",
   "theme — CSS variables and base styles",
   "utils — cn() helper",
   "Primitives — button, input, card, dialog, …",
-  "Blocks — login-form, …",
-  "project-setup — optional conventions (this item)",
+  "Blocks — login, signup, login-form, …",
 ] as const
 
 export function ProjectSetupOverviewPreview() {

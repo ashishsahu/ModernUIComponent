@@ -42,14 +42,6 @@ import {
   TooltipTrigger,
 } from "@/registry/default/ui/tooltip"
 
-export function InputGroupWithTooltipPreview() {
-  const [country, setCountry] = React.useState("+1")
-
-  return (
-    <InputGroupWithTooltipDemo country={country} setCountry={setCountry} />
-  )
-}
-
 function InputGroupWithTooltipDemo({
   country,
   setCountry,
@@ -167,5 +159,11 @@ function InputGroupWithTooltipDemo({
       </Field>
     </FieldGroup>
   )
+}
+
+
+export function InputGroupWithTooltipPreview() {
+  const [country, setCountry] = React.useState("+1")
+  return <InputGroupWithTooltipDemo country={country} setCountry={setCountry} />
 }
 

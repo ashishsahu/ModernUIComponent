@@ -12,7 +12,7 @@ import {
 import { docVariantDefinitions } from "./doc-variant-definitions.mjs"
 import { readFile } from "node:fs/promises"
 
-const MANUAL_PAGES = ["accordion", "project-setup"]
+const MANUAL_PAGES = ["accordion", "login", "signup", "project-setup"]
 const DOC_ONLY_PAGES = new Set(Object.keys(docVariantDefinitions))
 
 function toVariantPreviewName(componentName, variantId) {

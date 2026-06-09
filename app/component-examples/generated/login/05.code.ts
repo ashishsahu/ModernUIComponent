@@ -1,0 +1,1 @@
+export const Login05Code = "import { LoginForm } from \"@/registry/default/blocks/login-05/components/login-form\"\n\nexport function LoginPage() {\n  return (\n    <div className=\"flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10\">\n      <div className=\"w-full max-w-sm\">\n        <LoginForm />\n      </div>\n    </div>\n  )\n}\n"

@@ -108,8 +108,6 @@ import { ButtonDemoPreview } from "@/app/component-examples/generated/button/def
 import { ButtonDemoCode } from "@/app/component-examples/generated/button/default.code"
 import { ButtonAsChildPreview } from "@/app/component-examples/generated/button/as-child"
 import { ButtonAsChildCode } from "@/app/component-examples/generated/button/as-child.code"
-import { ButtonAschildPreview } from "@/app/component-examples/generated/button/aschild"
-import { ButtonAschildCode } from "@/app/component-examples/generated/button/aschild.code"
 import { ButtonDestructivePreview } from "@/app/component-examples/generated/button/destructive"
 import { ButtonDestructiveCode } from "@/app/component-examples/generated/button/destructive.code"
 import { ButtonGhostPreview } from "@/app/component-examples/generated/button/ghost"
@@ -1394,13 +1392,6 @@ export const generatedVariantPages: Record<string, ComponentVariantPage> = {
         description: "shadcn button example.",
         Preview: ButtonAsChildPreview,
         code: ButtonAsChildCode,
-      },
-      {
-        id: "aschild",
-        title: "Aschild",
-        description: "Aschild example from shadcn docs.",
-        Preview: ButtonAschildPreview,
-        code: ButtonAschildCode,
       },
       {
         id: "destructive",

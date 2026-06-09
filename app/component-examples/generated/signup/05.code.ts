@@ -1,0 +1,1 @@
+export const Signup05Code = "import { SignupForm } from \"@/registry/default/blocks/signup-05/components/signup-form\"\n\nexport function SignupPage() {\n  return (\n    <div className=\"flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10\">\n      <div className=\"w-full max-w-sm\">\n        <SignupForm />\n      </div>\n    </div>\n  )\n}\n"

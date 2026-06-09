@@ -70,6 +70,33 @@ function toVariantCodeExportName(componentName, variantId) {
   return `${toExportName(componentName)}${toExportName(variantId)}Code`
 }
 
+function normalizeVariantId(variantId) {
+  return variantId.toLowerCase().replace(/[-_]/g, "")
+}
+
+function dedupeVariantPages(generatedPages) {
+  let removed = 0
+
+  for (const page of generatedPages) {
+    const seen = new Set()
+    const deduped = []
+
+    for (const variant of page.variants) {
+      const key = normalizeVariantId(variant.id)
+      if (seen.has(key)) {
+        removed++
+        continue
+      }
+      seen.add(key)
+      deduped.push(variant)
+    }
+
+    page.variants = deduped
+  }
+
+  return removed
+}
+
 function applySharedTransforms(content) {
   return content
     .replaceAll("@/registry/new-york/ui/", "@/registry/default/ui/")
@@ -425,6 +452,12 @@ async function main() {
   )
   const grouped = groupRegistryItems(uiNames, shadcnRegistry.items)
 
+  const { resolveRadixExampleFiles } = await import("./sync-radix-doc-examples.mjs")
+  const radixManifest = await resolveRadixExampleFiles({ requireRemote: false })
+  console.log(
+    `Radix doc manifest: ${radixManifest.files.length} files (${radixManifest.source})`
+  )
+
   await rm(GENERATED_DIR, { recursive: true, force: true })
   await mkdir(GENERATED_DIR, { recursive: true })
 
@@ -459,7 +492,18 @@ async function main() {
   }
 
   const { syncRadixDocExamples } = await import("./sync-radix-doc-examples.mjs")
-  await syncRadixDocExamples({ generatedPages, uiNames, uiItemByName })
+  await syncRadixDocExamples({
+    generatedPages,
+    uiNames,
+    uiItemByName,
+    radixExampleFiles: radixManifest.files,
+  })
+
+  const deduped = dedupeVariantPages(generatedPages)
+  if (deduped > 0) {
+    console.log(`  Removed ${deduped} duplicate variant(s)`)
+  }
+
   await writeGeneratedPages(generatedPages)
 
   console.log(`\nGenerated registry pages: ${generatedPages.length}`)
@@ -470,4 +514,17 @@ async function main() {
   return { generatedPages, uiItemByName, skipped }
 }
 
-export { main as syncComponentDemos, GENERATED_DIR, toExportName, transformPreviewSource, transformConsumerCode, writeFile, mkdir, path, ROOT }
+export {
+  main as syncComponentDemos,
+  applySharedTransforms,
+  dedupeVariantPages,
+  GENERATED_DIR,
+  normalizeVariantId,
+  toExportName,
+  transformPreviewSource,
+  transformConsumerCode,
+  writeFile,
+  mkdir,
+  path,
+  ROOT,
+}
