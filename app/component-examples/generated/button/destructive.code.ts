@@ -1,0 +1,1 @@
+export const ButtonDestructiveCode = "import { Button } from \"@/registry/default/ui/button\"\n\nexport function ButtonDestructive() {\n  return <Button variant=\"destructive\">Destructive</Button>\n}\n"

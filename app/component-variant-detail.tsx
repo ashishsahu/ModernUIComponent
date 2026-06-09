@@ -1,0 +1,107 @@
+"use client"
+
+import * as React from "react"
+import Link from "next/link"
+import { ArrowLeftIcon } from "lucide-react"
+
+import {
+  ComponentCodeDrawer,
+  ViewCodeButton,
+} from "@/app/component-code-drawer"
+import { ComponentRegistryLayout } from "@/app/component-registry-layout"
+import { markRegistryScrollTarget } from "@/app/component-registry-sidebar"
+import { getVariantPage } from "@/app/component-variants"
+import { Button } from "@/registry/default/ui/button"
+
+type VariantCodeTarget = {
+  title: string
+  description: string
+  install?: string
+  code: string
+}
+
+export function ComponentVariantDetail({ name }: { name: string }) {
+  const page = getVariantPage(name)
+
+  const [codeTarget, setCodeTarget] = React.useState<VariantCodeTarget | null>(
+    null
+  )
+  const [codeOpen, setCodeOpen] = React.useState(false)
+
+  const handleViewCode = React.useCallback((target: VariantCodeTarget) => {
+    setCodeTarget(target)
+    setCodeOpen(true)
+  }, [])
+
+  if (!page) {
+    return null
+  }
+
+  return (
+    <ComponentRegistryLayout activeName={page.name} variantDetail>
+      <div className="flex flex-col gap-4">
+        <Button variant="ghost" size="sm" className="w-fit px-0" asChild>
+          <Link
+            href={`/#${page.name}`}
+            onClick={() => markRegistryScrollTarget(page.name)}
+          >
+            <ArrowLeftIcon className="size-4" />
+            Back to registry
+          </Link>
+        </Button>
+        <div className="flex flex-col gap-2">
+          <h1 className="text-3xl font-bold tracking-tight">{page.title}</h1>
+          <p className="text-muted-foreground">{page.description}</p>
+          <code className="text-muted-foreground break-all text-xs">
+            {page.install}
+          </code>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-6 pb-16">
+        {page.variants.map((variant) => (
+          <article
+            key={variant.id}
+            id={variant.id}
+            className="scroll-mt-24 flex flex-col gap-4 rounded-lg border bg-card p-4"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex min-w-0 flex-col gap-1">
+                <h2 className="text-lg font-semibold">{variant.title}</h2>
+                <p className="text-muted-foreground text-sm">
+                  {variant.description}
+                </p>
+              </div>
+              <ViewCodeButton
+                onClick={() =>
+                  handleViewCode({
+                    title: `${page.title} — ${variant.title}`,
+                    description: variant.description,
+                    install: page.install,
+                    code: variant.code,
+                  })
+                }
+              />
+            </div>
+            <div className="rounded-lg border border-border bg-muted/50 p-1.5">
+              <div className="flex min-h-24 w-full items-center justify-center rounded-md bg-card p-6 shadow-sm ring-1 ring-border/40">
+                <div className="w-full max-w-lg">
+                  <variant.Preview />
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <ComponentCodeDrawer
+        variant={codeTarget}
+        open={codeOpen}
+        onOpenChange={(open) => {
+          setCodeOpen(open)
+          if (!open) setCodeTarget(null)
+        }}
+      />
+    </ComponentRegistryLayout>
+  )
+}

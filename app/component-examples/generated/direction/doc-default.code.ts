@@ -1,0 +1,1 @@
+export const DirectionDocDemoCode = "import { DirectionProvider } from \"@/registry/default/ui/direction\"\n\nexport function DirectionDemo() {\n  return (\n    <DirectionProvider dir=\"rtl\">\n      <p className=\"text-sm\">RTL content — مرحبا</p>\n    </DirectionProvider>\n  )\n}"

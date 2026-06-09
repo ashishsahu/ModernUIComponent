@@ -1,0 +1,1 @@
+export const SwitchDemoCode = "import { Label } from \"@/registry/default/ui/label\"\nimport { Switch } from \"@/registry/default/ui/switch\"\n\nexport function SwitchDemo() {\n  return (\n    <div className=\"flex items-center space-x-2\">\n      <Switch id=\"airplane-mode\" />\n      <Label htmlFor=\"airplane-mode\">Airplane Mode</Label>\n    </div>\n  )\n}\n"

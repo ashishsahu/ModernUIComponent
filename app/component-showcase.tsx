@@ -3,10 +3,56 @@
 import * as React from "react"
 
 import { catalog, type CatalogItem } from "@/app/catalog"
+import {
+  ComponentCodeDrawer,
+  ViewCodeButton,
+  ViewVariantsButton,
+} from "@/app/component-code-drawer"
+import { ComponentRegistryLayout } from "@/app/component-registry-layout"
+import {
+  useRegistryActiveSection,
+  useRegistryScrollTarget,
+} from "@/app/component-registry-sidebar"
+import { useComponentSearch } from "@/app/component-search"
+import { getDetailPageLabel, hasVariantPage } from "@/app/component-variants"
 import { componentPreviews } from "@/app/component-previews"
-import { Input } from "@/registry/default/ui/input"
 
-function ComponentCard({ item }: { item: CatalogItem }) {
+function LazyPreview({ children }: { children: React.ReactNode }) {
+  const ref = React.useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = React.useState(false)
+
+  React.useEffect(() => {
+    const node = ref.current
+    if (!node) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: "200px 0px" }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div ref={ref} className="w-full">
+      {visible ? children : <div className="min-h-24 w-full" aria-hidden />}
+    </div>
+  )
+}
+
+function ComponentCard({
+  item,
+  onViewCode,
+}: {
+  item: CatalogItem
+  onViewCode: (item: CatalogItem) => void
+}) {
   const preview = componentPreviews[item.name]
 
   return (
@@ -14,16 +60,29 @@ function ComponentCard({ item }: { item: CatalogItem }) {
       id={item.name}
       className="scroll-mt-24 flex flex-col gap-4 rounded-lg border bg-card p-4"
     >
-      <div className="flex flex-col gap-1">
-        <h3 className="text-lg font-semibold">{item.title}</h3>
-        <p className="text-muted-foreground text-sm">{item.description}</p>
-        <code className="text-muted-foreground mt-1 break-all text-xs">
-          {item.install}
-        </code>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex min-w-0 flex-col gap-1">
+          <h3 className="text-lg font-semibold">{item.title}</h3>
+          <p className="text-muted-foreground text-sm">{item.description}</p>
+          <code className="text-muted-foreground mt-1 break-all text-xs">
+            {item.install}
+          </code>
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          {hasVariantPage(item.name) ? (
+            <ViewVariantsButton
+              href={`/components/${item.name}`}
+              label={getDetailPageLabel(item.name)}
+            />
+          ) : null}
+          <ViewCodeButton onClick={() => onViewCode(item)} />
+        </div>
       </div>
       {preview ? (
-        <div className="flex min-h-32 items-center justify-center rounded-md border border-dashed bg-background p-6">
-          {preview}
+        <div className="rounded-lg border border-border bg-muted/50 p-1.5">
+          <div className="flex min-h-24 w-full items-center justify-center rounded-md bg-card p-6 shadow-sm ring-1 ring-border/40">
+            <LazyPreview>{preview}</LazyPreview>
+          </div>
         </div>
       ) : null}
     </article>
@@ -31,7 +90,16 @@ function ComponentCard({ item }: { item: CatalogItem }) {
 }
 
 export function ComponentShowcase() {
-  const [query, setQuery] = React.useState("")
+  useRegistryScrollTarget()
+  const activeName = useRegistryActiveSection()
+  const { query } = useComponentSearch()
+  const [codeItem, setCodeItem] = React.useState<CatalogItem | null>(null)
+  const [codeOpen, setCodeOpen] = React.useState(false)
+
+  const handleViewCode = React.useCallback((item: CatalogItem) => {
+    setCodeItem(item)
+    setCodeOpen(true)
+  }, [])
 
   const filteredCatalog = React.useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -53,33 +121,8 @@ export function ComponentShowcase() {
   const totalCount = catalog.reduce((sum, c) => sum + c.items.length, 0)
 
   return (
-    <div className="flex w-full flex-col gap-8 px-6 py-8 lg:flex-row lg:gap-10 lg:px-10">
-      <aside className="lg:sticky lg:top-24 lg:h-[calc(100svh-8rem)] lg:w-56 lg:shrink-0 lg:overflow-y-auto">
-        <nav className="flex flex-col gap-4">
-          <p className="text-brand text-xs font-medium tracking-wide uppercase">
-            Components
-          </p>
-          {catalog.map((category) => (
-            <div key={category.id} className="flex flex-col gap-1">
-              <p className="text-muted-foreground text-xs font-medium uppercase">
-                {category.title}
-              </p>
-              {category.items.map((item) => (
-                <a
-                  key={item.name}
-                  href={`#${item.name}`}
-                  className="hover:text-primary rounded-md px-2 py-1 text-sm transition-colors"
-                >
-                  {item.title}
-                </a>
-              ))}
-            </div>
-          ))}
-        </nav>
-      </aside>
-
-      <div className="flex min-w-0 flex-1 flex-col gap-8">
-        <header className="flex flex-col gap-3">
+    <ComponentRegistryLayout activeName={activeName}>
+      <header className="flex flex-col gap-3">
           <h1 className="text-3xl font-bold tracking-tight">
             Component Registry
           </h1>
@@ -87,12 +130,6 @@ export function ComponentShowcase() {
             {totalCount} components distributed via the shadcn CLI. Install
             source into any React project — teams own the code.
           </p>
-          <Input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search components..."
-            className="max-w-md"
-          />
         </header>
 
         <section className="bg-muted/50 flex flex-col gap-3 rounded-lg border p-4">
@@ -113,13 +150,22 @@ npx shadcn@latest add ashishsahu/ModernUIComponent/button`}</code>
               </h2>
               <div className="grid gap-4">
                 {category.items.map((item) => (
-                  <ComponentCard key={item.name} item={item} />
+                  <ComponentCard
+                    key={item.name}
+                    item={item}
+                    onViewCode={handleViewCode}
+                  />
                 ))}
               </div>
             </section>
           ))}
         </main>
-      </div>
-    </div>
+
+      <ComponentCodeDrawer
+        item={codeItem}
+        open={codeOpen}
+        onOpenChange={setCodeOpen}
+      />
+    </ComponentRegistryLayout>
   )
 }

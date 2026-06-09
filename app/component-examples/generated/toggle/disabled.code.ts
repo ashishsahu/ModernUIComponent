@@ -1,0 +1,1 @@
+export const ToggleDisabledCode = "import { Underline } from \"lucide-react\"\n\nimport { Toggle } from \"@/registry/default/ui/toggle\"\n\nexport function ToggleDisabled() {\n  return (\n    <Toggle aria-label=\"Toggle italic\" disabled>\n      <Underline className=\"h-4 w-4\" />\n    </Toggle>\n  )\n}\n"

@@ -1,0 +1,1 @@
+export const TextareaDisabledCode = "import { Textarea } from \"@/registry/default/ui/textarea\"\n\nexport function TextareaDisabled() {\n  return <Textarea placeholder=\"Type your message here.\" disabled />\n}\n"

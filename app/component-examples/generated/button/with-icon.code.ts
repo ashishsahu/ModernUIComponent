@@ -1,0 +1,1 @@
+export const ButtonWithIconCode = "import { MailOpen } from \"lucide-react\"\n\nimport { Button } from \"@/registry/default/ui/button\"\n\nexport function ButtonWithIcon() {\n  return (\n    <Button>\n      <MailOpen /> Login with Email\n    </Button>\n  )\n}\n"

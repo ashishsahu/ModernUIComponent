@@ -1,0 +1,1 @@
+export const Sidebar13Code = "import { SettingsDialog } from \"@/registry/new-york/blocks/sidebar-13/components/settings-dialog\"\n\nexport function Page() {\n  return (\n    <div className=\"flex h-svh items-center justify-center\">\n      <SettingsDialog />\n    </div>\n  )\n}\n"

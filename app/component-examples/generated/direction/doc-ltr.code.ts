@@ -1,0 +1,1 @@
+export const DirectionDocLtrCode = "import { DirectionProvider } from \"@/registry/default/ui/direction\"\n\nexport function DirectionLtr() {\n  return (\n    <DirectionProvider dir=\"ltr\">\n      <p className=\"text-sm\">LTR content — Hello</p>\n    </DirectionProvider>\n  )\n}"

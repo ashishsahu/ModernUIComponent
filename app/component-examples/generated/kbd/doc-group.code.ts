@@ -1,0 +1,1 @@
+export const KbdDocGroupCode = "import { Kbd, KbdGroup } from \"@/registry/default/ui/kbd\"\n\nexport function KbdGroupDemo() {\n  return (\n    <p className=\"text-muted-foreground text-sm\">\n      Press <KbdGroup><Kbd>⌘</Kbd><Kbd>K</Kbd></KbdGroup> to open command palette\n    </p>\n  )\n}"

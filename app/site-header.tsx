@@ -1,6 +1,8 @@
 import Link from "next/link"
 
+import { ComponentSearchInput } from "@/app/component-search"
 import { GitHubLink } from "@/app/github-link"
+import { ModeToggle } from "@/app/mode-toggle"
 
 function ModernLogo({ className }: { className?: string }) {
   return (
@@ -66,17 +68,26 @@ function ModernLogo({ className }: { className?: string }) {
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="flex h-16 w-full items-center justify-between px-6 lg:px-10">
-        <Link href="/" className="flex items-center gap-3">
-          <ModernLogo className="h-6 w-auto text-foreground" />
+      <div className="grid h-16 w-full grid-cols-[auto_1fr_auto] items-center gap-4 px-6 lg:px-10">
+        <Link href="/" className="flex min-w-0 items-center gap-3">
+          <ModernLogo className="h-6 w-auto shrink-0 text-foreground" />
+          <span
+            aria-hidden="true"
+            className="bg-border hidden h-5 w-px sm:block"
+          />
+          <span className="text-muted-foreground hidden truncate text-sm sm:inline">
+            Component Registry
+          </span>
           <span className="sr-only">Modern — Component Registry</span>
         </Link>
-        <div className="flex items-center gap-6">
-          <p className="text-muted-foreground hidden text-sm sm:block">
-            Component Registry
-          </p>
+        <ComponentSearchInput className="mx-auto hidden h-9 w-full max-w-md sm:block" />
+        <div className="flex items-center justify-end gap-2 sm:gap-4">
+          <ModeToggle />
           <GitHubLink className="text-foreground hover:text-primary inline-flex items-center gap-2 text-sm font-medium transition-colors" />
         </div>
+      </div>
+      <div className="border-t px-6 pb-3 sm:hidden">
+        <ComponentSearchInput className="h-9 w-full" />
       </div>
     </header>
   )

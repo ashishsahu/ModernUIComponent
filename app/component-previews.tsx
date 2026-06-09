@@ -17,13 +17,10 @@ import {
   UserIcon,
 } from "lucide-react"
 
+import { AccordionBasicPreview } from "@/app/component-examples/accordion-variants"
+import { chartPreviewEntries } from "@/app/chart-previews"
+import { ThemePalettePreview } from "@/app/theme-palette-preview"
 import { LoginForm } from "@/registry/default/blocks/login-form/login-form"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/registry/default/ui/accordion"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -264,25 +261,7 @@ const chartConfig = {
 const comboboxItems = ["Next.js", "React", "Tailwind CSS", "TypeScript"]
 
 export const componentPreviews: Record<string, React.ReactNode> = {
-  theme: (
-    <div className="grid w-full max-w-md grid-cols-2 gap-3 sm:grid-cols-4">
-      {[
-        ["Primary", "bg-primary"],
-        ["Brand", "bg-brand"],
-        ["Muted", "bg-muted"],
-        ["Accent", "bg-accent"],
-        ["Background", "bg-background border"],
-        ["Card", "bg-card border"],
-        ["Destructive", "bg-destructive"],
-        ["Border", "bg-border"],
-      ].map(([label, cls]) => (
-        <div key={label} className="flex flex-col gap-2">
-          <div className={`h-12 rounded-md ${cls}`} />
-          <span className="text-muted-foreground text-xs">{label}</span>
-        </div>
-      ))}
-    </div>
-  ),
+  theme: <ThemePalettePreview />,
   utils: (
     <code className="bg-muted rounded-md px-3 py-2 text-sm">
       cn(&quot;px-4&quot;, condition &amp;&amp; &quot;bg-primary&quot;)
@@ -478,16 +457,9 @@ export const componentPreviews: Record<string, React.ReactNode> = {
     </Tabs>
   ),
   accordion: (
-    <Accordion type="single" collapsible className="w-full max-w-sm">
-      <AccordionItem value="item-1">
-        <AccordionTrigger>Is it accessible?</AccordionTrigger>
-        <AccordionContent>Yes. It follows WAI-ARIA patterns.</AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-2">
-        <AccordionTrigger>Is it styled?</AccordionTrigger>
-        <AccordionContent>Yes. It uses ModernUI tokens.</AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <div className="w-full max-w-sm">
+      <AccordionBasicPreview />
+    </div>
   ),
   breadcrumb: (
     <Breadcrumb>
@@ -805,7 +777,7 @@ export const componentPreviews: Record<string, React.ReactNode> = {
     </div>
   ),
   item: (
-    <Item className="max-w-sm">
+    <Item variant="outline" className="max-w-sm">
       <ItemMedia variant="icon">
         <UserIcon />
       </ItemMedia>
@@ -842,6 +814,7 @@ export const componentPreviews: Record<string, React.ReactNode> = {
     </Command>
   ),
   "login-form": <LoginForm />,
+  ...chartPreviewEntries,
   "project-setup": (
     <div className="text-muted-foreground max-w-sm text-center text-sm">
       Installs AGENTS.md and docs/modernui-setup.md into consumer projects.

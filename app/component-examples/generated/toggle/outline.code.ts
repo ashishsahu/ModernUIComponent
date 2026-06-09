@@ -1,0 +1,1 @@
+export const ToggleOutlineCode = "import { Italic } from \"lucide-react\"\n\nimport { Toggle } from \"@/registry/default/ui/toggle\"\n\nexport function ToggleOutline() {\n  return (\n    <Toggle variant=\"outline\" aria-label=\"Toggle italic\">\n      <Italic />\n    </Toggle>\n  )\n}\n"

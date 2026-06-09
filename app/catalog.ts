@@ -1,3 +1,5 @@
+import { chartCatalogCategories } from "@/app/chart-catalog"
+
 export type CatalogItem = {
   name: string
   title: string
@@ -132,6 +134,7 @@ export const catalog: CatalogCategory[] = [
       item("command", "Command", "Command palette search."),
     ],
   },
+  ...chartCatalogCategories,
   {
     id: "blocks",
     title: "Blocks",

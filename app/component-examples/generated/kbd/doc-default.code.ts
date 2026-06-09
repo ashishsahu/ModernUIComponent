@@ -1,0 +1,1 @@
+export const KbdDocDemoCode = "import { Kbd } from \"@/registry/default/ui/kbd\"\n\nexport function KbdDemo() {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <Kbd>⌘</Kbd>\n      <Kbd>K</Kbd>\n    </div>\n  )\n}"

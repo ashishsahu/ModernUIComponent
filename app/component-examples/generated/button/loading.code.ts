@@ -1,0 +1,1 @@
+export const ButtonLoadingCode = "import { Loader2 } from \"lucide-react\"\n\nimport { Button } from \"@/registry/default/ui/button\"\n\nexport function ButtonLoading() {\n  return (\n    <Button disabled>\n      <Loader2 className=\"animate-spin\" />\n      Please wait\n    </Button>\n  )\n}\n"

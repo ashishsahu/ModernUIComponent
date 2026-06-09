@@ -1,0 +1,1 @@
+export const ButtonAsChildCode = "import Link from \"next/link\"\n\nimport { Button } from \"@/registry/default/ui/button\"\n\nexport function ButtonAsChild() {\n  return (\n    <Button asChild>\n      <Link href=\"/login\">Login</Link>\n    </Button>\n  )\n}\n"

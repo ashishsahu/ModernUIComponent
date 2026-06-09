@@ -1,0 +1,1 @@
+export const ToggleWithTextCode = "import { Italic } from \"lucide-react\"\n\nimport { Toggle } from \"@/registry/default/ui/toggle\"\n\nexport function ToggleWithText() {\n  return (\n    <Toggle aria-label=\"Toggle italic\">\n      <Italic />\n      Italic\n    </Toggle>\n  )\n}\n"

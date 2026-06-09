@@ -1,0 +1,1 @@
+export const TextareaWithButtonCode = "import { Button } from \"@/registry/default/ui/button\"\nimport { Textarea } from \"@/registry/default/ui/textarea\"\n\nexport function TextareaWithButton() {\n  return (\n    <div className=\"grid w-full gap-2\">\n      <Textarea placeholder=\"Type your message here.\" />\n      <Button>Send message</Button>\n    </div>\n  )\n}\n"
