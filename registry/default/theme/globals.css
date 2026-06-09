@@ -51,6 +51,11 @@
   --color-brand-foreground: var(--brand-foreground);
   --color-cream: var(--cream);
   --color-teal-bg: var(--teal-bg);
+  --color-dataos-surface: var(--dataos-surface);
+  --color-dataos-success-bg: var(--dataos-success-bg);
+  --color-dataos-success-fg: var(--dataos-success-fg);
+  --color-dataos-warn-bg: var(--dataos-warn-bg);
+  --color-dataos-warn-fg: var(--dataos-warn-fg);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -94,6 +99,13 @@
   /* Extended palette tokens */
   --cream: #ede9e5;
   --teal-bg: #d6eded;
+
+  /* DataOS UI — quality states */
+  --dataos-surface: #f9f9f8;
+  --dataos-success-bg: #dff0e8;
+  --dataos-success-fg: #4a7c5f;
+  --dataos-warn-bg: #fff7e6;
+  --dataos-warn-fg: #d4a017;
 
   /* Text scale (Figma) */
   --text-primary: #1f1f1f;
@@ -148,6 +160,13 @@
 
   --cream: #363634;
   --teal-bg: #1a3d3d;
+
+  /* DataOS UI — quality states */
+  --dataos-surface: #2e2e2c;
+  --dataos-success-bg: #1f3d32;
+  --dataos-success-fg: #8fd4a8;
+  --dataos-warn-bg: #3d3220;
+  --dataos-warn-fg: #e6b84d;
 
   --text-primary: #f9f8f7;
   --text-secondary: #bfbfbf;

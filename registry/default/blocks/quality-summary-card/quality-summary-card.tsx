@@ -52,9 +52,9 @@ function StatusIcon({ status }: { status: DimensionStatus }) {
 
   if (isPass) {
     return (
-      <span className="flex size-[18px] shrink-0 items-center justify-center rounded-[5px] bg-[#dff0e8]">
+      <span className="flex size-[18px] shrink-0 items-center justify-center rounded-[5px] bg-dataos-success-bg">
         <CircleCheckIcon
-          className="size-3.5 text-[#4a7c5f]"
+          className="size-3.5 text-dataos-success-fg"
           strokeWidth={2}
         />
       </span>
@@ -62,9 +62,9 @@ function StatusIcon({ status }: { status: DimensionStatus }) {
   }
 
   return (
-    <span className="flex size-[18px] shrink-0 items-center justify-center rounded-[5px] bg-[#fff7e6]">
+    <span className="flex size-[18px] shrink-0 items-center justify-center rounded-[5px] bg-dataos-warn-bg">
       <AlertTriangleIcon
-        className="size-3 text-[#d4a017]"
+        className="size-3 text-dataos-warn-fg"
         strokeWidth={2.25}
       />
     </span>
@@ -82,14 +82,14 @@ export function QualitySummaryCard({
   onViewAll,
 }: QualitySummaryCardProps) {
   return (
-    <Card className="w-full max-w-[22rem] gap-0 border border-border/60 bg-[#f9f9f8] py-5 shadow-sm">
+    <Card className="w-full max-w-[22rem] gap-0 border border-border/60 bg-dataos-surface py-5 text-card-foreground shadow-sm">
       <CardHeader className="grid-rows-1 items-center gap-0 px-5 pb-4">
         <CardTitle className="flex items-center gap-2 text-[15px] font-medium text-foreground">
           <AwardIcon className="size-4 stroke-[1.75] text-muted-foreground" />
           {title}
         </CardTitle>
         <CardAction>
-          <Badge className="rounded-full border-0 bg-[#dff0e8] px-2.5 py-0.5 text-xs font-medium text-[#4a7c5f] hover:bg-[#dff0e8]">
+          <Badge className="rounded-full border-0 bg-dataos-success-bg px-2.5 py-0.5 text-xs font-medium text-dataos-success-fg hover:bg-dataos-success-bg">
             {statusLabel}
           </Badge>
         </CardAction>
@@ -104,7 +104,7 @@ export function QualitySummaryCard({
             /{total} rules
           </span>
         </p>
-        <p className="text-muted-foreground text-[13px]">
+        <p className="text-[13px] text-muted-foreground">
           across {dimensionCount} dimensions • {updatedAt}
         </p>
       </CardContent>
@@ -126,7 +126,7 @@ export function QualitySummaryCard({
               <div className="min-w-0">
                 <p className={labelLineClass}>{dimension.name}</p>
                 {dimension.detail ? (
-                  <p className="mt-0.5 text-[11px] leading-none text-[#d4a017]">
+                  <p className="mt-0.5 text-[11px] leading-none text-dataos-warn-fg">
                     {dimension.detail}
                   </p>
                 ) : null}
@@ -139,7 +139,7 @@ export function QualitySummaryCard({
       <CardFooter className="border-t border-border/80 px-5 pt-4 pb-0">
         <button
           type="button"
-          className="inline-flex items-center gap-1 text-[13px] font-medium text-[#2d8a8a] transition-colors hover:text-[#2d8a8a]/80"
+          className="inline-flex items-center gap-1 text-[13px] font-medium text-primary transition-colors hover:text-primary/80"
           onClick={onViewAll}
         >
           View all {passed} quality rules
