@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { ComponentSearchInput } from "@/app/component-search"
+import { OmniSearchTrigger } from "@/app/omni-search"
 import { GitHubLink } from "@/app/github-link"
 import { ModeToggle } from "@/app/mode-toggle"
 import { VersionDropdown } from "@/app/version-dropdown"
@@ -84,14 +84,14 @@ export function SiteHeader() {
           </Link>
           <VersionDropdown />
         </div>
-        <ComponentSearchInput className="mx-auto hidden h-9 w-full max-w-md sm:block" />
+        <OmniSearchTrigger className="mx-auto hidden w-full max-w-md sm:flex" />
         <div className="flex items-center justify-end gap-2 sm:gap-4">
           <ModeToggle />
           <GitHubLink className="text-foreground hover:text-primary inline-flex items-center gap-2 text-sm font-medium transition-colors" />
         </div>
       </div>
       <div className="border-t px-6 pb-3 sm:hidden">
-        <ComponentSearchInput className="h-9 w-full" />
+        <OmniSearchTrigger className="w-full" />
       </div>
     </header>
   )
