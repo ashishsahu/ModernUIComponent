@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import { Frame, LifeBuoy, Map, PieChart, Send } from "lucide-react"
 
@@ -84,8 +86,10 @@ function NavProjectsSkeleton() {
   )
 }
 
-async function NavProjects() {
-  const projects = await fetchProjects()
+const projectsPromise = fetchProjects()
+
+function NavProjects() {
+  const projects = React.use(projectsPromise)
 
   return (
     <SidebarMenu>

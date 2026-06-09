@@ -7,6 +7,7 @@ const GENERATED_DIR = path.join(ROOT, "app/component-examples/generated")
 const MANUAL_PAGES = new Set(["accordion"])
 const BLOCK_COMPONENTS = new Set(["sidebar", "calendar"])
 const INTERNAL_COMPONENTS = new Set(["sidebar"])
+const BLOCK_PREVIEW_PLACEHOLDER_COMPONENTS = new Set(["sidebar"])
 const CHART_EXAMPLES = new Set([
   "chart-bar-demo",
   "chart-bar-demo-grid",
@@ -82,6 +83,25 @@ function applySharedTransforms(content) {
     .replaceAll("<Icons.logo", "<Sparkles")
 }
 
+function transformAsyncRscPreviewForClient(source) {
+  if (!/async function \w+\(\) \{[\s\S]*?await /.test(source)) {
+    return source
+  }
+
+  let result = source.replace(
+    /async function (\w+)\(\) \{\s*const (\w+) = await (\w+)\(\)/,
+    `const $3Promise = $3()\n\nfunction $1() {\n  const $2 = React.use($3Promise)`
+  )
+
+  if (result === source) return source
+
+  if (!result.startsWith('"use client"')) {
+    result = `"use client"\n\n${result}`
+  }
+
+  return result
+}
+
 function transformPreviewSource(content, previewName) {
   let source = applySharedTransforms(content)
 
@@ -94,8 +114,10 @@ function transformPreviewSource(content, previewName) {
     `export function ${previewName}()`
   )
 
+  source = transformAsyncRscPreviewForClient(source)
+
   const needsClient =
-    /useState|useEffect|useMemo|useCallback|useRef|useReducer|useContext|"use client"/.test(
+    /useState|useEffect|useMemo|useCallback|useRef|useReducer|useContext|React\.use\(|"use client"/.test(
       source
     )
 
@@ -277,7 +299,24 @@ async function writeBlockVariant(componentName, itemMeta) {
     ? transformConsumerCode(blockEntrySource)
     : ""
 
-  const wrapperSource = `"use client"
+  const blockTitle = toVariantTitle(variantId, "block")
+  const usePlaceholder = BLOCK_PREVIEW_PLACEHOLDER_COMPONENTS.has(componentName)
+
+  const wrapperSource = usePlaceholder
+    ? `"use client"
+
+import { BlockLayoutPlaceholder } from "@/app/variant-preview-canvas"
+
+export function ${previewName}() {
+  return (
+    <BlockLayoutPlaceholder
+      title="${blockTitle}"
+      description="shadcn ${blockName} full application layout."
+    />
+  )
+}
+`
+    : `"use client"
 
 import BlockExample from "${entryImportPath}"
 

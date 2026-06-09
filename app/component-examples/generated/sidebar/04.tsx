@@ -1,11 +1,12 @@
 "use client"
 
-import BlockExample from "@/app/component-examples/generated/sidebar/blocks/sidebar-04/page"
+import { BlockLayoutPlaceholder } from "@/app/variant-preview-canvas"
 
 export function Sidebar04Preview() {
   return (
-    <div className="relative max-h-[520px] w-full overflow-auto rounded-lg border bg-background">
-      <BlockExample />
-    </div>
+    <BlockLayoutPlaceholder
+      title="Example 04"
+      description="shadcn sidebar-04 full application layout."
+    />
   )
 }

@@ -11,7 +11,12 @@ import {
 import { ComponentRegistryLayout } from "@/app/component-registry-layout"
 import { markRegistryScrollTarget } from "@/app/component-registry-sidebar"
 import { getVariantPage } from "@/app/component-variants"
+import { VariantPreviewCanvas } from "@/app/variant-preview-canvas"
 import { Button } from "@/registry/default/ui/button"
+
+function isSidebarPage(componentName: string) {
+  return componentName === "sidebar"
+}
 
 type VariantCodeTarget = {
   title: string
@@ -83,13 +88,12 @@ export function ComponentVariantDetail({ name }: { name: string }) {
                 }
               />
             </div>
-            <div className="rounded-lg border border-border bg-muted/50 p-1.5">
-              <div className="flex min-h-24 w-full items-center justify-center rounded-md bg-card p-6 shadow-sm ring-1 ring-border/40">
-                <div className="w-full max-w-lg">
-                  <variant.Preview />
-                </div>
-              </div>
-            </div>
+            <VariantPreviewCanvas
+              Preview={variant.Preview}
+              fullWidth={isSidebarPage(page.name)}
+              tall={isSidebarPage(page.name)}
+              containSidebar={isSidebarPage(page.name)}
+            />
           </article>
         ))}
       </div>
