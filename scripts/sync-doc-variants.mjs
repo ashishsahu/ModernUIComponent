@@ -129,6 +129,8 @@ ${pagesObject}
 
 async function main() {
   const { generatedPages } = await syncComponentDemos()
+  const { execSync } = await import("node:child_process")
+  execSync("node scripts/fix-radix-examples.mjs", { stdio: "inherit" })
   const docPages = await writeDocVariants()
 
   await writeFile(

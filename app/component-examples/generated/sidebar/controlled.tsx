@@ -1,15 +1,7 @@
 "use client"
 
 import * as React from "react"
-import {
-  Frame,
-  LifeBuoy,
-  Map,
-  PanelLeftClose,
-  PanelLeftOpen,
-  PieChart,
-  Send,
-} from "lucide-react"
+import { Frame, LifeBuoy, Map, PanelLeftClose, PanelLeftOpen, PieChart, Send,  } from "lucide-react"
 
 import { Button } from "@/registry/default/ui/button"
 import {

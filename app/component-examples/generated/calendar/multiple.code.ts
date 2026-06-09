@@ -1,0 +1,1 @@
+export const CalendarMultipleCode = "import { Calendar } from \"@/registry/default/ui/calendar\"\nimport { Card, CardContent } from \"@/registry/default/ui/card\"\n\nexport function Example() {\n  return (\n    <Card className=\"mx-auto w-fit p-0\">\n      <CardContent className=\"p-0\">\n        <Calendar mode=\"multiple\" />\n      </CardContent>\n    </Card>\n  )\n}\n"

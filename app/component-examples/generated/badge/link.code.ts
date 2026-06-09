@@ -1,0 +1,1 @@
+export const BadgeLinkCode = "import { ArrowUpRightIcon } from \"lucide-react\"\n\nimport { Badge } from \"@/registry/default/ui/badge\"\n\nexport function Example() {\n  return (\n    <Badge asChild>\n      <a href=\"#link\">\n        Open Link <ArrowUpRightIcon data-icon=\"inline-end\" />\n      </a>\n    </Badge>\n  )\n}\n"

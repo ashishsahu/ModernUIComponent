@@ -1,0 +1,20 @@
+import { Kbd, KbdGroup } from "@/registry/default/ui/kbd"
+
+export function KbdDemoPreview() {
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <KbdGroup>
+        <Kbd>⌘</Kbd>
+        <Kbd>⇧</Kbd>
+        <Kbd>⌥</Kbd>
+        <Kbd>⌃</Kbd>
+      </KbdGroup>
+      <KbdGroup>
+        <Kbd>Ctrl</Kbd>
+        <span>+</span>
+        <Kbd>B</Kbd>
+      </KbdGroup>
+    </div>
+  )
+}
+

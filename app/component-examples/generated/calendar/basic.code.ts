@@ -1,0 +1,1 @@
+export const CalendarBasicCode = "\"use client\"\n\nimport { Calendar } from \"@/registry/default/ui/calendar\"\n\nexport function Example() {\n  return <Calendar mode=\"single\" className=\"rounded-lg border\" />\n}\n"

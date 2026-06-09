@@ -1,23 +1,7 @@
 "use client"
 
 import * as React from "react"
-import {
-  ArrowDown,
-  ArrowUp,
-  Bell,
-  Copy,
-  CornerUpLeft,
-  CornerUpRight,
-  FileText,
-  GalleryVerticalEnd,
-  LineChart,
-  Link,
-  MoreHorizontal,
-  Settings2,
-  Star,
-  Trash,
-  Trash2,
-} from "lucide-react"
+import { ArrowDown, ArrowUp, Bell, Copy, CornerUpLeft, CornerUpRight, FileText, GalleryVerticalEnd, LineChart, Link, MoreHorizontal, Settings2, Star, Trash, Trash2,  } from "lucide-react"
 
 import { Button } from "@/registry/default/ui/button"
 import {

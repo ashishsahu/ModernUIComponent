@@ -1,17 +1,7 @@
 "use client"
 
 import * as React from "react"
-import {
-  ArchiveIcon,
-  ArrowLeftIcon,
-  CalendarPlusIcon,
-  ClockIcon,
-  ListFilterIcon,
-  MailCheckIcon,
-  MoreHorizontalIcon,
-  TagIcon,
-  Trash2Icon,
-} from "lucide-react"
+import { ArchiveIcon, ArrowLeftIcon, CalendarPlusIcon, ClockIcon, ListFilterIcon, MailCheckIcon, MoreHorizontalIcon, TagIcon, Trash2Icon,  } from "lucide-react"
 
 import { Button } from "@/registry/default/ui/button"
 import { ButtonGroup } from "@/registry/default/ui/button-group"

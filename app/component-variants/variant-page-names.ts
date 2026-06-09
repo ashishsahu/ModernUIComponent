@@ -1,6 +1,7 @@
 export function getVariantPageNames(): string[] {
   return [
   "accordion",
+  "accordion",
   "alert",
   "alert-dialog",
   "aspect-ratio",

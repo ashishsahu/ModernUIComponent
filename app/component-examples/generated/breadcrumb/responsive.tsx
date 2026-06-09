@@ -108,7 +108,7 @@ export function BreadcrumbResponsivePreview() {
             <BreadcrumbSeparator />
           </>
         ) : null}
-        {items.slice(-ITEMS_TO_DISPLAY + 1).map((item) => (
+        {items.slice(-ITEMS_TO_DISPLAY + 1).map((item, index) => (
           <React.Fragment key={item.label}>
             <BreadcrumbItem>
               {item.href ? (
@@ -119,9 +119,10 @@ export function BreadcrumbResponsivePreview() {
                   <Link href={item.href}>{item.label}</Link>
                 </BreadcrumbLink>
               ) : (
-                <BreadcrumbPage className="max-w-20 truncate md:max-w-none">
-                  {item.label}
-                </BreadcrumbPage>
+                
+              <BreadcrumbPage className="max-w-20 truncate md:max-w-none">
+                {item.label}
+              </BreadcrumbPage>
               )}
             </BreadcrumbItem>
             {item.href ? <BreadcrumbSeparator /> : null}

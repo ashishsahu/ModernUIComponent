@@ -1,0 +1,1 @@
+export const CalendarCaptionCode = "\"use client\"\n\nimport { Calendar } from \"@/registry/default/ui/calendar\"\n\nexport function Example() {\n  return (\n    <Calendar\n      mode=\"single\"\n      captionLayout=\"dropdown\"\n      className=\"rounded-lg border\"\n    />\n  )\n}\n"

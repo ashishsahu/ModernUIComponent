@@ -1,0 +1,1 @@
+export const SliderMultipleCode = "import { Slider } from \"@/registry/default/ui/slider\"\n\nexport function Example() {\n  return (\n    <Slider\n      defaultValue={[10, 20, 70]}\n      max={100}\n      step={10}\n      className=\"mx-auto w-full max-w-xs\"\n    />\n  )\n}\n"

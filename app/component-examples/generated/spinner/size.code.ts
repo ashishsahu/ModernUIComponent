@@ -1,0 +1,1 @@
+export const SpinnerSizeCode = "import { Spinner } from \"@/registry/default/ui/spinner\"\n\nexport function Example() {\n  return (\n    <div className=\"flex items-center gap-6\">\n      <Spinner className=\"size-3\" />\n      <Spinner className=\"size-4\" />\n      <Spinner className=\"size-6\" />\n      <Spinner className=\"size-8\" />\n    </div>\n  )\n}\n"

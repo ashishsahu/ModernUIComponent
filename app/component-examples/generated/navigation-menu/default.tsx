@@ -107,10 +107,7 @@ export function NavigationMenuDemoPreview() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink
-            asChild
-            className={navigationMenuTriggerStyle()}
-          >
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
             <Link href="/docs">Documentation</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>

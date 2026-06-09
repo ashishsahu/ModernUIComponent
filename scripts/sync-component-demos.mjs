@@ -364,6 +364,54 @@ export function ${previewName}() {
   }
 }
 
+async function writeGeneratedPages(generatedPages) {
+  const imports = generatedPages
+    .flatMap((page) =>
+      page.variants.flatMap((variant) => [
+        `import { ${variant.previewName} } from "${variant.importPath}"`,
+        `import { ${variant.codeExportName} } from "${variant.importPath}.code"`,
+      ])
+    )
+    .join("\n")
+
+  const pagesObject = generatedPages
+    .map(
+      (page) => `  ${JSON.stringify(page.name)}: {
+    name: ${JSON.stringify(page.name)},
+    title: ${JSON.stringify(page.title)},
+    description: ${JSON.stringify(page.description)},
+    install: ${JSON.stringify(`npx shadcn@latest add ashishsahu/ModernUIComponent/${page.name}`)},
+    variants: [
+${page.variants
+  .map(
+    (variant) => `      {
+        id: ${JSON.stringify(variant.id)},
+        title: ${JSON.stringify(variant.title)},
+        description: ${JSON.stringify(variant.description)},
+        Preview: ${variant.previewName},
+        code: ${variant.codeExportName},
+      },`
+  )
+  .join("\n")}
+    ],
+  },`
+    )
+    .join("\n")
+
+  await writeFile(
+    path.join(ROOT, "app/component-variants/generated-pages.tsx"),
+    `"use client"
+
+${imports}
+import type { ComponentVariantPage } from "@/app/component-variants/types"
+
+export const generatedVariantPages: Record<string, ComponentVariantPage> = {
+${pagesObject}
+}
+`
+  )
+}
+
 async function main() {
   const ourRegistry = JSON.parse(
     await readFile(path.join(ROOT, "registry.json"), "utf8")
@@ -410,51 +458,9 @@ async function main() {
     console.log(`  ${componentName} (${variants.length})`)
   }
 
-  const imports = generatedPages
-    .flatMap((page) =>
-      page.variants.flatMap((variant) => [
-        `import { ${variant.previewName} } from "${variant.importPath}"`,
-        `import { ${variant.codeExportName} } from "${variant.importPath}.code"`,
-      ])
-    )
-    .join("\n")
-
-  const pagesObject = generatedPages
-    .map(
-      (page) => `  ${JSON.stringify(page.name)}: {
-    name: ${JSON.stringify(page.name)},
-    title: ${JSON.stringify(page.title)},
-    description: ${JSON.stringify(page.description)},
-    install: ${JSON.stringify(`npx shadcn@latest add ashishsahu/ModernUIComponent/${page.name}`)},
-    variants: [
-${page.variants
-  .map(
-    (variant) => `      {
-        id: ${JSON.stringify(variant.id)},
-        title: ${JSON.stringify(variant.title)},
-        description: ${JSON.stringify(variant.description)},
-        Preview: ${variant.previewName},
-        code: ${variant.codeExportName},
-      },`
-  )
-  .join("\n")}
-    ],
-  },`
-    )
-    .join("\n")
-
-  await writeFile(
-    path.join(ROOT, "app/component-variants/generated-pages.tsx"),
-    `"use client"
-
-${imports}
-import type { ComponentVariantPage } from "@/app/component-variants/types"
-
-export const generatedVariantPages: Record<string, ComponentVariantPage> = {
-${pagesObject}
-}
-`
-  )
+  const { syncRadixDocExamples } = await import("./sync-radix-doc-examples.mjs")
+  await syncRadixDocExamples({ generatedPages, uiNames, uiItemByName })
+  await writeGeneratedPages(generatedPages)
 
   console.log(`\nGenerated registry pages: ${generatedPages.length}`)
   if (skipped.length) {

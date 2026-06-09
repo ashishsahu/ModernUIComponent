@@ -1,0 +1,1 @@
+export const ButtonRoundedCode = "import { ArrowUpIcon } from \"lucide-react\"\n\nimport { Button } from \"@/registry/default/ui/button\"\n\nexport function Example() {\n  return (\n    <div className=\"flex flex-col gap-8\">\n      <Button variant=\"outline\" size=\"icon\" className=\"rounded-full\">\n        <ArrowUpIcon />\n      </Button>\n    </div>\n  )\n}\n"

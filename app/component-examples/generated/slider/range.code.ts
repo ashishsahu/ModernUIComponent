@@ -1,0 +1,1 @@
+export const SliderRangeCode = "import { Slider } from \"@/registry/default/ui/slider\"\n\nexport function Example() {\n  return (\n    <Slider\n      defaultValue={[25, 50]}\n      max={100}\n      step={5}\n      className=\"mx-auto w-full max-w-xs\"\n    />\n  )\n}\n"

@@ -1,0 +1,1 @@
+export const KbdButtonCode = "import { Button } from \"@/registry/default/ui/button\"\nimport { Kbd } from \"@/registry/default/ui/kbd\"\n\nexport function Example() {\n  return (\n    <Button variant=\"outline\">\n      Accept{\" \"}\n      <Kbd data-icon=\"inline-end\" className=\"translate-x-0.5\">\n        ⏎\n      </Kbd>\n    </Button>\n  )\n}\n"

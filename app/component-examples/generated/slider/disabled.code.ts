@@ -1,0 +1,1 @@
+export const SliderDisabledCode = "import { Slider } from \"@/registry/default/ui/slider\"\n\nexport function Example() {\n  return (\n    <Slider\n      defaultValue={[50]}\n      max={100}\n      step={1}\n      disabled\n      className=\"mx-auto w-full max-w-xs\"\n    />\n  )\n}\n"

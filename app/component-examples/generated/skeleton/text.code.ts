@@ -1,0 +1,1 @@
+export const SkeletonTextCode = "import { Skeleton } from \"@/registry/default/ui/skeleton\"\n\nexport function Example() {\n  return (\n    <div className=\"flex w-full max-w-xs flex-col gap-2\">\n      <Skeleton className=\"h-4 w-full\" />\n      <Skeleton className=\"h-4 w-full\" />\n      <Skeleton className=\"h-4 w-3/4\" />\n    </div>\n  )\n}\n"
