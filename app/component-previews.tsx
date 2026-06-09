@@ -18,6 +18,7 @@ import { ChartCatalogPreview } from "@/app/component-examples/chart-detail/catal
 import { chartPreviewEntries } from "@/app/chart-previews"
 import { ThemePalettePreview } from "@/app/theme-palette-preview"
 import { LoginForm } from "@/registry/default/blocks/login-form/login-form"
+import { QualitySummaryCard } from "@/registry/default/blocks/quality-summary-card/quality-summary-card"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -789,6 +790,11 @@ export const componentPreviews: Record<string, React.ReactNode> = {
   ),
   ...authBlockCatalogPreviews,
   "login-form": <LoginForm />,
+  "quality-summary-card": (
+    <div className="flex w-full justify-center">
+      <QualitySummaryCard />
+    </div>
+  ),
   ...chartPreviewEntries,
   "project-setup": <ProjectSetupOverviewPreview />,
 }

@@ -1102,6 +1102,27 @@
       ]
     },
     {
+      "name": "quality-summary-card",
+      "type": "registry:block",
+      "title": "Quality Summary Card",
+      "description": "DataOS quality score card with dimension status grid and healthy badge.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "badge",
+        "button",
+        "card",
+        "separator"
+      ],
+      "files": [
+        {
+          "path": "registry/default/blocks/quality-summary-card/quality-summary-card.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "chart-area-axes",
       "type": "registry:block",
       "title": "Area Chart Axes",

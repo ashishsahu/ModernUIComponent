@@ -22,15 +22,20 @@ const SCROLL_SPY_OFFSET = 120
 const SIDEBAR_SCROLL_KEY = "registry:sidebar-scroll"
 const FOUNDATION_ID = "foundation"
 const BLOCKS_ID = "blocks"
+const DATAOS_UI_ID = "dataos-ui"
 
 function splitCatalog(categories: CatalogCategory[]) {
   const foundation = categories.find((category) => category.id === FOUNDATION_ID)
   const blocks = categories.find((category) => category.id === BLOCKS_ID)
+  const dataosUi = categories.find((category) => category.id === DATAOS_UI_ID)
   const components = categories.filter(
-    (category) => category.id !== FOUNDATION_ID && category.id !== BLOCKS_ID
+    (category) =>
+      category.id !== FOUNDATION_ID &&
+      category.id !== BLOCKS_ID &&
+      category.id !== DATAOS_UI_ID
   )
 
-  return { foundation, blocks, components }
+  return { foundation, blocks, dataosUi, components }
 }
 
 type ComponentRegistrySidebarProps = {
@@ -272,6 +277,22 @@ export function ComponentRegistrySidebar({
                   </Collapsible>
                 )
               })}
+            </div>
+          </section>
+        ) : null}
+
+        {filteredCatalog.dataosUi ? (
+          <section className="flex flex-col gap-1">
+            <SidebarSectionLabel>DataOS UI Components</SidebarSectionLabel>
+            <div className="flex flex-col gap-0.5 pl-3">
+              {filteredCatalog.dataosUi.items.map((item) => (
+                <SidebarNavItem
+                  key={item.name}
+                  item={item}
+                  activeName={activeName}
+                  variantDetail={variantDetail}
+                />
+              ))}
             </div>
           </section>
         ) : null}

@@ -149,6 +149,17 @@ export const catalog: CatalogCategory[] = [
   },
   ...chartCatalogCategories,
   {
+    id: "dataos-ui",
+    title: "DataOS UI Components",
+    items: [
+      item(
+        "quality-summary-card",
+        "Quality Summary Card",
+        "Quality score overview with dimension pass/warn status and view-all action."
+      ),
+    ],
+  },
+  {
     id: "blocks",
     title: "Blocks",
     items: [

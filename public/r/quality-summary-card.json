@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "quality-summary-card",
+  "title": "Quality Summary Card",
+  "description": "DataOS quality score card with dimension status grid and healthy badge.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "badge",
+    "button",
+    "card",
+    "separator"
+  ],
+  "files": [
+    {
+      "path": "registry/default/blocks/quality-summary-card/quality-summary-card.tsx",
+      "content": "\"use client\"\n\nimport {\n  AlertTriangleIcon,\n  ArrowRightIcon,\n  AwardIcon,\n  CheckIcon,\n} from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { Badge } from \"@/registry/default/ui/badge\"\nimport { Button } from \"@/registry/default/ui/button\"\nimport {\n  Card,\n  CardAction,\n  CardContent,\n  CardFooter,\n  CardHeader,\n  CardTitle,\n} from \"@/registry/default/ui/card\"\nimport { Separator } from \"@/registry/default/ui/separator\"\n\ntype DimensionStatus = \"pass\" | \"warn\"\n\nexport type QualityDimension = {\n  name: string\n  status: DimensionStatus\n  detail?: string\n}\n\nexport type QualitySummaryCardProps = {\n  title?: string\n  statusLabel?: string\n  passed?: number\n  total?: number\n  dimensionCount?: number\n  updatedAt?: string\n  dimensions?: QualityDimension[]\n  onViewAll?: () => void\n}\n\nconst defaultDimensions: QualityDimension[] = [\n  { name: \"Accuracy\", status: \"pass\" },\n  { name: \"Completeness\", status: \"pass\" },\n  { name: \"Freshness\", status: \"pass\" },\n  { name: \"Schema\", status: \"pass\" },\n  { name: \"Uniqueness\", status: \"warn\", detail: \"3 issues\" },\n  { name: \"Validity\", status: \"pass\" },\n]\n\nfunction StatusIcon({ status }: { status: DimensionStatus }) {\n  const isPass = status === \"pass\"\n\n  return (\n    <span\n      className={cn(\n        \"flex size-5 shrink-0 items-center justify-center rounded-full\",\n        isPass\n          ? \"bg-primary/10 text-primary\"\n          : \"bg-amber-100 text-amber-600 dark:bg-amber-950 dark:text-amber-400\"\n      )}\n    >\n      {isPass ? (\n        <CheckIcon className=\"size-3\" />\n      ) : (\n        <AlertTriangleIcon className=\"size-3\" />\n      )}\n    </span>\n  )\n}\n\nexport function QualitySummaryCard({\n  title = \"Quality\",\n  statusLabel = \"Healthy\",\n  passed = 47,\n  total = 100,\n  dimensionCount = 6,\n  updatedAt = \"3m ago\",\n  dimensions = defaultDimensions,\n  onViewAll,\n}: QualitySummaryCardProps) {\n  return (\n    <Card className=\"w-full max-w-md gap-4\">\n      <CardHeader className=\"pb-0\">\n        <CardTitle className=\"flex items-center gap-2 text-base font-medium\">\n          <AwardIcon className=\"size-4 text-muted-foreground\" />\n          {title}\n        </CardTitle>\n        <CardAction>\n          <Badge className=\"bg-primary/10 text-primary hover:bg-primary/10\">\n            {statusLabel}\n          </Badge>\n        </CardAction>\n      </CardHeader>\n\n      <CardContent className=\"space-y-1\">\n        <p className=\"text-3xl font-semibold tracking-tight\">\n          {passed}\n          <span className=\"text-muted-foreground text-lg font-normal\">\n            /{total} rules\n          </span>\n        </p>\n        <p className=\"text-muted-foreground text-sm\">\n          across {dimensionCount} dimensions • {updatedAt}\n        </p>\n      </CardContent>\n\n      <CardContent className=\"pt-0\">\n        <div className=\"grid grid-cols-2 gap-x-6 gap-y-3\">\n          {dimensions.map((dimension) => (\n            <div key={dimension.name} className=\"flex items-start gap-2\">\n              <StatusIcon status={dimension.status} />\n              <div className=\"min-w-0\">\n                <p className=\"text-sm leading-none\">{dimension.name}</p>\n                {dimension.detail ? (\n                  <p className=\"mt-1 text-xs text-amber-600 dark:text-amber-400\">\n                    {dimension.detail}\n                  </p>\n                ) : null}\n              </div>\n            </div>\n          ))}\n        </div>\n      </CardContent>\n\n      <CardFooter className=\"flex-col items-stretch gap-4 border-t pt-4\">\n        <Separator />\n        <Button\n          type=\"button\"\n          variant=\"ghost\"\n          className=\"h-auto justify-start gap-1 px-0 text-primary hover:bg-transparent hover:text-primary/80\"\n          onClick={onViewAll}\n        >\n          View all {passed} quality rules\n          <ArrowRightIcon className=\"size-4\" />\n        </Button>\n      </CardFooter>\n    </Card>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:block"
+}
