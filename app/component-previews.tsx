@@ -222,6 +222,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@/registry/default/ui/sidebar"
@@ -533,9 +534,9 @@ export const componentPreviews: Record<string, React.ReactNode> = {
     </Pagination>
   ),
   sidebar: (
-    <SidebarProvider className="min-h-0 w-full max-w-sm">
-      <div className="flex min-h-40 w-full overflow-hidden rounded-lg border">
-        <Sidebar collapsible="none" className="border-r">
+    <div className="relative isolate mx-auto w-full max-w-sm overflow-hidden rounded-lg border [transform:translateZ(0)] [&_[data-slot=sidebar-wrapper]]:!min-h-0 [&_[data-slot=sidebar-wrapper]]:min-h-40 [&_[data-slot=sidebar-container]]:!absolute [&_[data-slot=sidebar-container]]:top-0 [&_[data-slot=sidebar-container]]:!h-full">
+      <SidebarProvider className="min-h-40">
+        <Sidebar collapsible="offcanvas">
           <SidebarContent>
             <SidebarGroup>
               <SidebarGroupLabel>Menu</SidebarGroupLabel>
@@ -552,11 +553,13 @@ export const componentPreviews: Record<string, React.ReactNode> = {
             </SidebarGroup>
           </SidebarContent>
         </Sidebar>
-        <main className="flex flex-1 items-center justify-center p-4 text-sm">
-          <SidebarTrigger />
-        </main>
-      </div>
-    </SidebarProvider>
+        <SidebarInset>
+          <div className="flex min-h-40 items-center justify-center p-4">
+            <SidebarTrigger />
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
   ),
   dialog: (
     <Dialog>
