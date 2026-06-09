@@ -8,10 +8,18 @@ export type ComponentVariant = {
   code: string
 }
 
+export type ComponentVariantSection = {
+  id: string
+  title?: string
+  description?: string
+  variants: ComponentVariant[]
+}
+
 export type ComponentVariantPage = {
   name: string
   title: string
   description: string
   install: string
   variants: ComponentVariant[]
+  sections?: ComponentVariantSection[]
 }

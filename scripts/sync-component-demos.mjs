@@ -5,6 +5,7 @@ const ROOT = process.cwd()
 const REGISTRY_URL = "https://ui.shadcn.com/r/styles/new-york"
 const GENERATED_DIR = path.join(ROOT, "app/component-examples/generated")
 const MANUAL_PAGES = new Set(["accordion"])
+const DETAIL_PAGE_COMPONENTS = new Set(["chart"])
 const BLOCK_COMPONENTS = new Set(["sidebar", "calendar"])
 const INTERNAL_COMPONENTS = new Set(["sidebar"])
 const CHART_EXAMPLES = new Set([
@@ -74,6 +75,109 @@ function normalizeVariantId(variantId) {
   return variantId.toLowerCase().replace(/[-_]/g, "")
 }
 
+const CALENDAR_DOC_VARIANTS = [
+  {
+    id: "basic",
+    title: "Basic",
+    description: "A basic calendar with rounded border styling.",
+  },
+  {
+    id: "range",
+    title: "Range Calendar",
+    description: "Select a range of dates with mode=\"range\".",
+  },
+  {
+    id: "caption",
+    title: "Month and Year Selector",
+    description: "Month and year dropdowns via captionLayout=\"dropdown\".",
+  },
+  {
+    id: "presets",
+    title: "Presets",
+    description: "Quick date presets such as Today, Tomorrow, and In a week.",
+  },
+  {
+    id: "time",
+    title: "Date and Time Picker",
+    description: "Combine a calendar with start and end time inputs.",
+  },
+  {
+    id: "booked-dates",
+    title: "Booked Dates",
+    description: "Disable or style dates that are unavailable for booking.",
+  },
+  {
+    id: "custom-days",
+    title: "Custom Cell Size",
+    description: "Customize day cell size using the --cell-size CSS variable.",
+  },
+  {
+    id: "week-numbers",
+    title: "Week Numbers",
+    description: "Show ISO week numbers alongside the calendar grid.",
+  },
+  {
+    id: "rtl",
+    title: "RTL",
+    description: "Right-to-left calendar with locale-aware formatting.",
+  },
+  {
+    id: "multiple",
+    title: "Multiple Months",
+    description: "Display more than one month at a time.",
+  },
+  {
+    id: "form",
+    title: "Form",
+    description: "Calendar integrated with a form and validation.",
+  },
+]
+
+function finalizeCalendarPage(page) {
+  if (page.name !== "calendar") return page
+
+  const byId = new Map(page.variants.map((variant) => [variant.id, variant]))
+  const ordered = []
+
+  const defaultVariant = byId.get("default")
+  if (defaultVariant) {
+    ordered.push({
+      ...defaultVariant,
+      title: "Default",
+      description: "Interactive single-date selection with controlled state.",
+    })
+  }
+
+  for (const docVariant of CALENDAR_DOC_VARIANTS) {
+    const variant = byId.get(docVariant.id)
+    if (!variant) continue
+    ordered.push({
+      ...variant,
+      title: docVariant.title,
+      description: docVariant.description,
+    })
+  }
+
+  const blockVariants = page.variants
+    .filter((variant) => /^\d{2}$/.test(variant.id))
+    .sort((a, b) => a.id.localeCompare(b.id))
+
+  for (const variant of blockVariants) {
+    ordered.push({
+      ...variant,
+      title: `Block ${variant.id}`,
+      description: `shadcn calendar-${variant.id} block layout.`,
+    })
+  }
+
+  return {
+    ...page,
+    description:
+      "Date picker calendar built on React DayPicker — doc examples and 32 block layouts.",
+    variants: ordered,
+  }
+}
+
 function dedupeVariantPages(generatedPages) {
   let removed = 0
 
@@ -97,8 +201,15 @@ function dedupeVariantPages(generatedPages) {
   return removed
 }
 
-function applySharedTransforms(content) {
+function normalizeChartThemeColors(content) {
   return content
+    .replaceAll('color: "#2563eb"', 'color: "var(--chart-1)"')
+    .replaceAll('color: "#60a5fa"', 'color: "var(--chart-2)"')
+    .replaceAll(/hsl\(var\(--chart-(\d)\)\)/g, "var(--chart-$1)")
+}
+
+function applySharedTransforms(content) {
+  return normalizeChartThemeColors(content)
     .replaceAll("@/registry/new-york/ui/", "@/registry/default/ui/")
     .replaceAll("@/registry/new-york/lib/", "@/lib/")
     .replaceAll("@/registry/new-york/hooks/", "@/hooks/")
@@ -504,9 +615,16 @@ async function main() {
     console.log(`  Removed ${deduped} duplicate variant(s)`)
   }
 
-  await writeGeneratedPages(generatedPages)
+  for (let index = 0; index < generatedPages.length; index++) {
+    generatedPages[index] = finalizeCalendarPage(generatedPages[index])
+  }
 
-  console.log(`\nGenerated registry pages: ${generatedPages.length}`)
+  const pagesForExport = generatedPages.filter(
+    (page) => !DETAIL_PAGE_COMPONENTS.has(page.name)
+  )
+  await writeGeneratedPages(pagesForExport)
+
+  console.log(`\nGenerated registry pages: ${pagesForExport.length}`)
   if (skipped.length) {
     console.log(`No registry variants: ${skipped.join(", ")}`)
   }

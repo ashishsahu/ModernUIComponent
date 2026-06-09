@@ -15,6 +15,7 @@ import {
   LoginVariantPage,
   SignupVariantPage,
 } from "@/app/component-variants/auth-block-pages"
+import { chartVariantPage } from "@/app/component-variants/chart-page"
 import { projectSetupVariantPage } from "@/app/component-variants/project-setup-page"
 import type { ComponentVariantPage } from "@/app/component-variants/types"
 
@@ -96,19 +97,26 @@ function mergeVariantPages(
   return merged
 }
 
+const generatedWithoutChart = Object.fromEntries(
+  Object.entries(generatedVariantPages).filter(([name]) => name !== "chart")
+)
+
 export const componentVariantPages: Record<string, ComponentVariantPage> = {
   accordion: accordionVariantPage,
+  chart: chartVariantPage,
   login: LoginVariantPage,
   signup: SignupVariantPage,
   "project-setup": projectSetupVariantPage,
   ...mergeVariantPages(
-    generatedVariantPages,
+    generatedWithoutChart,
     docVariantSupplements,
     docVariantPages
   ),
 }
 
 const DETAIL_PAGE_LABELS: Record<string, string> = {
+  calendar: "Examples",
+  chart: "Docs",
   login: "Blocks",
   signup: "Blocks",
   "project-setup": "Details",

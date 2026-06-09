@@ -22,6 +22,18 @@ function isAuthBlockPage(componentName: string) {
   return componentName === "login" || componentName === "signup"
 }
 
+function isCalendarPage(componentName: string) {
+  return componentName === "calendar"
+}
+
+function isChartPage(componentName: string) {
+  return componentName === "chart"
+}
+
+function isChartInteractiveVariant(variantId: string) {
+  return variantId.includes("-interactive")
+}
+
 function isBlockLayoutVariant(variantId: string) {
   return /^\d{2}$/.test(variantId)
 }
@@ -112,10 +124,13 @@ export function ComponentVariantDetail({ name }: { name: string }) {
             <VariantPreviewCanvas
               Preview={variant.Preview}
               tall={
-                isSidebarPage(page.name) && !isBlockLayoutVariant(variant.id)
+                (isSidebarPage(page.name) && !isBlockLayoutVariant(variant.id)) ||
+                (isChartPage(page.name) && isChartInteractiveVariant(variant.id))
               }
               blockLayout={
-                (isSidebarPage(page.name) || isAuthBlockPage(page.name)) &&
+                (isSidebarPage(page.name) ||
+                  isAuthBlockPage(page.name) ||
+                  isCalendarPage(page.name)) &&
                 isBlockLayoutVariant(variant.id)
               }
               containSidebar={

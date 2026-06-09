@@ -12,7 +12,7 @@ import {
 import { docVariantDefinitions } from "./doc-variant-definitions.mjs"
 import { readFile } from "node:fs/promises"
 
-const MANUAL_PAGES = ["accordion", "login", "signup", "project-setup"]
+const MANUAL_PAGES = ["accordion", "chart", "login", "signup", "project-setup"]
 const DOC_ONLY_PAGES = new Set(Object.keys(docVariantDefinitions))
 
 function toVariantPreviewName(componentName, variantId) {
@@ -131,6 +131,7 @@ async function main() {
   const { generatedPages } = await syncComponentDemos()
   const { execSync } = await import("node:child_process")
   execSync("node scripts/fix-radix-examples.mjs", { stdio: "inherit" })
+  execSync("node scripts/sync-chart-detail.mjs", { stdio: "inherit" })
   const docPages = await writeDocVariants()
 
   await writeFile(

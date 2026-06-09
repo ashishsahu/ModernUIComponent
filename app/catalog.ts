@@ -129,8 +129,16 @@ export const catalog: CatalogCategory[] = [
     title: "Data Display",
     items: [
       item("table", "Table", "Data table primitives."),
-      item("chart", "Chart", "Recharts wrapper with theme tokens."),
-      item("calendar", "Calendar", "Date picker calendar."),
+      item(
+        "chart",
+        "Chart",
+        "Beautiful charts built with Recharts — interactive demos and composition examples."
+      ),
+      item(
+        "calendar",
+        "Calendar",
+        "React DayPicker calendar with doc examples and 32 block layouts."
+      ),
       item("carousel", "Carousel", "Content carousel."),
       item("avatar", "Avatar", "User avatar with fallback."),
       item("kbd", "Kbd", "Keyboard shortcut badge."),

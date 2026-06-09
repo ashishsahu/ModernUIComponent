@@ -1,12 +1,6 @@
 "use client"
 
 import * as React from "react"
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  XAxis,
-} from "recharts"
 import { toast } from "sonner"
 import {
   AlertCircleIcon,
@@ -20,6 +14,7 @@ import {
 import { AccordionBasicPreview } from "@/app/component-examples/accordion-variants"
 import { ProjectSetupOverviewPreview } from "@/app/component-examples/project-setup-detail"
 import { authBlockCatalogPreviews } from "@/app/component-examples/auth-block-catalog-previews"
+import { ChartCatalogPreview } from "@/app/component-examples/chart-detail/catalog-preview"
 import { chartPreviewEntries } from "@/app/chart-previews"
 import { ThemePalettePreview } from "@/app/theme-palette-preview"
 import { LoginForm } from "@/registry/default/blocks/login-form/login-form"
@@ -63,12 +58,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/registry/default/ui/carousel"
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@/registry/default/ui/chart"
 import { Checkbox } from "@/registry/default/ui/checkbox"
 import {
   Collapsible,
@@ -249,17 +238,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/registry/default/ui/tooltip"
-
-const chartData = [
-  { month: "Jan", value: 186 },
-  { month: "Feb", value: 220 },
-  { month: "Mar", value: 175 },
-  { month: "Apr", value: 240 },
-]
-
-const chartConfig = {
-  value: { label: "Users", color: "var(--chart-1)" },
-} satisfies ChartConfig
 
 const comboboxItems = ["Next.js", "React", "Tailwind CSS", "TypeScript"]
 
@@ -739,16 +717,7 @@ export const componentPreviews: Record<string, React.ReactNode> = {
       </TableBody>
     </Table>
   ),
-  chart: (
-    <ChartContainer config={chartConfig} className="aspect-auto h-[200px] w-full max-w-sm">
-      <BarChart data={chartData}>
-        <CartesianGrid vertical={false} />
-        <XAxis dataKey="month" tickLine={false} axisLine={false} />
-        <ChartTooltip content={<ChartTooltipContent />} />
-        <Bar dataKey="value" fill="var(--color-value)" radius={4} />
-      </BarChart>
-    </ChartContainer>
-  ),
+  chart: <ChartCatalogPreview />,
   calendar: (
     <Calendar mode="single" className="rounded-md border" />
   ),
